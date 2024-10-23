@@ -31,3 +31,18 @@ div.product-icons div:hover{
     background-color: transparent;
     color: rgb(173, 8, 8);
 }
+.nav-tab li::after{
+  width: 0;
+  animation: nav-tab 1s  ;
+  -webkit-animation: nav-tab 1s  ;
+  animation-fill-mode: forwards;
+  bottom: -1px;
+}
+@keyframes nav-tab {
+  0%{
+   width: 0;
+  }
+  100%{
+    width: 100%;
+  }
+}

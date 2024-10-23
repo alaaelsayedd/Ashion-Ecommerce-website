@@ -5,7 +5,7 @@ import { useParams } from "react-router-dom";
 function ProductDetails() {
   const { id } = useParams();
   const [productDetails, setProductDetails] = useState({});
-  const [imgeView, setImageView] = useState("");
+  const [imgeView, setImageView] = useState(null);
   const [index, setIsFocusIndex] = useState(0);
   async function getProductDetails() {
     let { data } = await axios.get(
@@ -64,7 +64,7 @@ function ProductDetails() {
 
           <p>
             <span className="font-semibold text-neutral-800">Price:</span>
-            {productDetails.price}
+            {productDetails.price}$
           </p>
 
           <p>
