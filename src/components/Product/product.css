@@ -1,0 +1,33 @@
+div.imge {
+  height: 300px;
+  width: 100%;
+  position: relative;
+  overflow: hidden;
+}
+div.product-icons {
+  position: absolute;
+  bottom: -150px;
+  left: 0;
+  right: 0;
+ 
+}
+div.imge:hover div.product-icons {
+  bottom: 10px;
+}
+
+div.product-icons div{
+    transition: .4s all ease-in-out;
+    -webkit-transition: .4s all ease-in-out;
+    -moz-transition: .4s all ease-in-out;
+    -ms-transition: .4s all ease-in-out;
+    -o-transition: .4s all ease-in-out;
+}
+div.product-icons div:hover{
+    transform: rotate(360deg);
+    -webkit-transform: rotate(360deg);
+    -moz-transform: rotate(360deg);
+    -ms-transform: rotate(360deg);
+    -o-transform: rotate(360deg);
+    background-color: transparent;
+    color: rgb(173, 8, 8);
+}
