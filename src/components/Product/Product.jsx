@@ -1,30 +1,65 @@
-import { useState } from "react";
+import { useContext, useState } from "react";
 import ProductCard from "./ProductCard";
+import axios from "axios";
+import { authContext } from "../../Context/AuthContext";
+import { useNavigate } from "react-router-dom";
+import { Bounce, toast } from "react-toastify";
+import { cartContext } from "../../Context/CartCount";
 
 function Product({ products, categories, getCategoryProduct, getProduct }) {
+  const { setCartCount } = useContext(cartContext);
   const [selecttab, setSelectTab] = useState("all");
+  const { isLogggedin } = useContext(authContext);
+  const navigate = useNavigate();
   function displayCtaegoryExist() {
     let categoriesExist = categories.filter(
       (category) =>
         category.name == "Men's Fashion" ||
         category.name == "Women's Fashion" ||
-        category.name == "Electronics" 
-       
-
-       
+        category.name == "Electronics"
     );
-    
+
     return categoriesExist;
+  }
+  async function addProductToCart(id) {
+    if (isLogggedin) {
+      let { data } = await axios.post(
+        "https://ecommerce.routemisr.com/api/v1/cart",
+        {
+          productId: id,
+        },
+        {
+          headers: {
+            token: localStorage.getItem("token"),
+          },
+        }
+      );
+      setCartCount(data.data.__v);
+      toast.info(data.message, {
+        position: "bottom-right",
+        autoClose: 4000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: false,
+        progress: undefined,
+        theme: "light",
+        transition: Bounce,
+      });
+      console.log(data);
+    } else {
+      navigate("/login");
+    }
   }
   return (
     <>
       <div className="my-12  w-full  md:w-4/5 mx-auto p-2 ">
-        <div className="flex justify-between items-baseline">
-          <h2 className="text-2xl mb-8 font-medium uppercase relative py-2 after:content-['']  after:absolute after:h-1 after:bg-red-700 after:bottom-0 after:left-0 after:w-28 after:rounded-sm  ">
+        <div className=" md:flex justify-between items-baseline  ">
+          <h2 className="text-2xl mb-8 font-medium uppercase relative head  ">
             New Products
           </h2>
           <nav>
-            <ul className="flex gap-5  font-semibold  nav-tab">
+            <ul className="flex gap-10  font-semibold text-sm nav-tab my-3 md:my-0">
               <li
                 className={`cursor-pointer ${
                   selecttab == "all" &&
@@ -37,12 +72,13 @@ function Product({ products, categories, getCategoryProduct, getProduct }) {
               >
                 All
               </li>
-              {displayCtaegoryExist().map((category) => (
+              {displayCtaegoryExist().map((category, key) => (
                 <li
                   className={`cursor-pointer ${
                     selecttab == category.name &&
                     "after:content-['']  relative after:absolute after:h-[2px] after:bg-red-700 after:bottom-0 after:left-0 after:right-0  after:rounded-sm  "
                   }`}
+                  key={key}
                   onClick={() => {
                     getCategoryProduct(category._id);
                     setSelectTab(category.name);
@@ -60,11 +96,12 @@ function Product({ products, categories, getCategoryProduct, getProduct }) {
             return (
               <ProductCard
                 image={product.imageCover}
-                title={product.title.split(' ').slice(0,8).join(" ")}
+                title={product.title.split(" ").slice(0, 8).join(" ")}
                 price={product.price}
                 rate={product.ratingsAverage}
                 key={index}
                 id={product.id}
+                addProductToCart={addProductToCart}
               />
             );
           })}

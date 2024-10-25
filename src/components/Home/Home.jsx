@@ -58,7 +58,7 @@ function Home() {
         getProduct={getProduct}
       />
       <div className="text-center flex gap-5 justify-center  my-10 number-cont">
-        {displayPageNumber()?.map((number) => {
+        {displayPageNumber()?.map((number,index) => {
           return (
             <span
               className={
@@ -67,6 +67,7 @@ function Home() {
                   : " text-neutral-700   border-neutral-400 border p-3 transform scale-95 transition-all duration-500 cursor-pointer shadow-sm hover:scale-105"
               }
               onClick={() => changePage(number)}
+              key={index}
             >
               {number}
             </span>

@@ -40,13 +40,16 @@ function Login() {
           localStorage.setItem("token", res.data.token);
           setLoginState(true);
           setLoadingStae(false);
-          navigate("/");
+          if (location.pathname == "/login") {
+            navigate("/")
+          } else {
+            navigate(location.pathname);
+          }
         })
         .catch((err) => {
           setErrorMessage(err.response.data.message);
           setLoadingStae(false);
         });
-     
     },
   });
 
@@ -57,11 +60,11 @@ function Login() {
           <img src={login} alt="login-imge" />
         </div>
         <div className=" md:w-1/2 w-full  flex justify-center p-10">
-          <form class="mx-auto w-full " onSubmit={formik.handleSubmit}>
-            <div class="mb-5">
+          <form className="mx-auto w-full " onSubmit={formik.handleSubmit}>
+            <div className="mb-5">
               <label
-                for="email"
-                class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+                htmlFor="email"
+                className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
               >
                 Your email
               </label>
@@ -81,10 +84,10 @@ function Login() {
                 </div>
               ) : null}
             </div>
-            <div class="mb-2">
+            <div className="mb-2">
               <label
-                for="password"
-                class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+                htmlFor="password"
+                className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
               >
                 Your password
               </label>
@@ -108,7 +111,7 @@ function Login() {
                 </div>
               )}
             </div>
-            <div class=" items-start mb-3 text-sm">
+            <div className=" items-start mb-3 text-sm">
               <p>
                 Don’t have An Account?{" "}
                 <Link className="underline" to={"/signup"}>

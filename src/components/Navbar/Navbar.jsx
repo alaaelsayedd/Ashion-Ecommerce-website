@@ -4,6 +4,7 @@ import "./navbar.css";
 import Sidebar from "./Sidebar";
 import { Link, NavLink } from "react-router-dom";
 import { authContext } from "../../Context/AuthContext";
+import { cartContext } from "../../Context/CartCount";
 const navigation = [
   { name: "Home", href: "/" },
   { name: "Women’s", href: "womarn" },
@@ -14,9 +15,10 @@ const navigation = [
 
 function Navbar() {
   const { isLogggedin, setLoginState } = useContext(authContext);
+  const {cartCount} =useContext(cartContext);
   const [showSlide, setShowSlide] = useState(false);
   const userDate = JSON.parse(localStorage.getItem("userData"));
-  console.log(userDate)
+  console.log(userDate);
 
   function openSidebar() {
     setShowSlide(true);
@@ -25,6 +27,7 @@ function Navbar() {
     localStorage.removeItem("token");
     localStorage.removeItem("userData");
     setLoginState(false);
+
   }
   return (
     <>
@@ -51,9 +54,9 @@ function Navbar() {
           </svg>
         </button>
         <ul className={`  list-none  gap-6 items-baseline fl hidden md:flex `}>
-          {navigation.map((navItem) => {
+          {navigation.map((navItem ,index) => {
             return (
-              <li className={`link text-neutral-800   font-medium`}>
+              <li className={`link text-neutral-800   font-medium`} key={index}>
                 <NavLink to={navItem.href}>{navItem.name}</NavLink>
               </li>
             );
@@ -129,21 +132,25 @@ function Navbar() {
               viewBox="0 0 24 24"
               strokeWidth="1.5"
               stroke="currentColor"
-              className="size-6"
+              className="size-6 cart "
             >
               <path
                 strokeLinecap="round"
                 strokeLinejoin="round"
                 d="M21 8.25c0-2.485-2.099-4.5-4.688-4.5-1.935 0-3.597 1.126-4.312 2.733-.715-1.607-2.377-2.733-4.313-2.733C5.1 3.75 3 5.765 3 8.25c0 7.22 9 12 9 12s9-4.78 9-12Z"
               />
+            
             </svg>
+          
+            <Link to={'/cart'} className="relative">
             <svg
               xmlns="http://www.w3.org/2000/svg"
               fill="none"
               viewBox="0 0 24 24"
               strokeWidth="1.5"
               stroke="currentColor"
-              className="size-6"
+              className="size-6  "
+            
             >
               <path
                 strokeLinecap="round"
@@ -151,6 +158,8 @@ function Navbar() {
                 d="M15.75 10.5V6a3.75 3.75 0 1 0-7.5 0v4.5m11.356-1.993 1.263 12c.07.665-.45 1.243-1.119 1.243H4.25a1.125 1.125 0 0 1-1.12-1.243l1.264-12A1.125 1.125 0 0 1 5.513 7.5h12.974c.576 0 1.059.435 1.119 1.007ZM8.625 10.5a.375.375 0 1 1-.75 0 .375.375 0 0 1 .75 0Zm7.5 0a.375.375 0 1 1-.75 0 .375.375 0 0 1 .75 0Z"
               />
             </svg>
+            <div className="bg-neutral-900 text-white h-5 w-5 text-center rounded-full absolute -right-2 -top-1/2 text-sm ">{cartCount}</div>
+            </Link>
           </div>
         </div>
       </nav>
