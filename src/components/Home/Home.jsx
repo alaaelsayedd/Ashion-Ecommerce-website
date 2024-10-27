@@ -49,7 +49,7 @@ function Home() {
   }, []);
   return (
     <>
-      <Header categories={categories} />
+      <Header  />
       <Product
         products={product}
         categories={categories}
