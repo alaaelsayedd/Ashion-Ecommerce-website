@@ -10,8 +10,9 @@ import ProductDetails from "./components/Product/ProductDetails";
 import Cart from "./components/Cart/Cart";
 import AuthProtectRoute from "./Guards/AuthProtectRoute";
 import { ToastContainer } from "react-toastify";
-import 'react-toastify/dist/ReactToastify.css';
-import CartCount from "./Context/CartCount";
+import "react-toastify/dist/ReactToastify.css";
+import { Provider } from "react-redux";
+import { store } from "./Redux/store";
 function App() {
   const router = createBrowserRouter([
     {
@@ -57,12 +58,12 @@ function App() {
 
   return (
     <>
-      <AuthContextProier>
-        <CartCount>
-        <RouterProvider router={router} />
-        <ToastContainer />
-        </CartCount>
-      </AuthContextProier>
+      <Provider store={store}>
+        <AuthContextProier>
+          <RouterProvider router={router} />
+          <ToastContainer />
+        </AuthContextProier>
+      </Provider>
     </>
   );
 }

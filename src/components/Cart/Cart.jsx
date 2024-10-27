@@ -1,19 +1,22 @@
 import axios from "axios";
-import { useContext, useEffect, useState } from "react";
+import {  useEffect, useState } from "react";
 import "./cart.css";
 import Popup from "../Popup/Popup";
 import CartCard from "./CartCard";
 import { Link } from "react-router-dom";
-import { cartContext } from "../../Context/CartCount";
+import { useDispatch, useSelector } from "react-redux";
+import {
+  getUserCartProduct,
+  setCartCount,
+  setCartProducts,
+  settotalCartPrice,
+} from "../../Redux/cartSlice";
 
 function Cart() {
-  const {
-    cartProducts,
-    setCartProducts,
-    totalCartPrice,
-    setTotalCartPrice,
-    setCartCount,
-  } = useContext(cartContext);
+  let { cartProducts, totalCartPrice } = useSelector(
+    (store) => store.cart
+  );
+  let dispatch = useDispatch();
   const [isPopup, setPopUp] = useState(false);
   const [ProductDetails, setProductDetails] = useState({});
   const [isLoading, setIsLoading] = useState(false);
@@ -27,18 +30,7 @@ function Cart() {
       setClosepopup(false);
     }, 100);
   }
-  async function getUserCart() {
-    let { data } = await axios.get(
-      "https://ecommerce.routemisr.com/api/v1/cart",
-      {
-        headers: {
-          token: localStorage.getItem("token"),
-        },
-      }
-    );
-    setCartProducts(data.data.products);
-    setTotalCartPrice(data.data.totalCartPrice);
-  }
+
   function ConfirmdeletItemformCart(id, title) {
     setProductDetails({ id, title });
     setPopUp(true);
@@ -64,8 +56,8 @@ function Cart() {
           });
           setTimeout(() => {
             closePop();
-            setCartProducts([]);
-            setCartCount(0);
+            dispatch(setCartProducts([]));
+            dispatch(setCartCount(0));
           }, 1000);
         })
         .catch((err) => {
@@ -86,9 +78,9 @@ function Cart() {
           }
         )
         .then((res) => {
-          setCartCount(res.data.numOfCartItems);
-          setCartProducts(res.data.data.products);
-          setTotalCartPrice(res.data.data.totalCartPrice);
+          dispatch(setCartCount(res.data.numOfCartItems));
+          dispatch(setCartProducts(res.data.data.products));
+          dispatch(settotalCartPrice(res.data.data.totalCartPrice));
           setIsLoading(false);
           setDeleteState({ message: "Item Sucessfully Deleted", status: true });
           setTimeout(() => {
@@ -113,12 +105,12 @@ function Cart() {
         },
       }
     );
-    setCartProducts(data.data.products);
-    setTotalCartPrice(data.data.totalCartPrice);
+    dispatch(setCartProducts(data.data.products));
+    dispatch(settotalCartPrice(data.data.totalCartPrice));
   }
 
   useEffect(() => {
-    getUserCart();
+    dispatch(getUserCartProduct());
   }, []);
   return (
     <>

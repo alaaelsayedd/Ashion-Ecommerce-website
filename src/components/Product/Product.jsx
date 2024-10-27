@@ -4,10 +4,11 @@ import axios from "axios";
 import { authContext } from "../../Context/AuthContext";
 import { useNavigate } from "react-router-dom";
 import { Bounce, toast } from "react-toastify";
-import { cartContext } from "../../Context/CartCount";
+import { useDispatch } from "react-redux";
+import { getUserCartProduct, setCartCount } from "../../Redux/cartSlice";
 
 function Product({ products, categories, getCategoryProduct, getProduct }) {
-  const { setCartCount } = useContext(cartContext);
+  let dispatch = useDispatch();
   const [selecttab, setSelectTab] = useState("all");
   const { isLogggedin } = useContext(authContext);
   const navigate = useNavigate();
@@ -34,7 +35,7 @@ function Product({ products, categories, getCategoryProduct, getProduct }) {
           },
         }
       );
-      setCartCount(data.data.__v);
+      dispatch(getUserCartProduct());
       toast.info(data.message, {
         position: "bottom-right",
         autoClose: 4000,

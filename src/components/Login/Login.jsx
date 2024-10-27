@@ -5,7 +5,10 @@ import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
 import { useContext, useState } from "react";
 import { authContext } from "../../Context/AuthContext";
+import { useDispatch } from "react-redux";
+import { getUserCartProduct } from "../../Redux/cartSlice";
 function Login() {
+  let dispatch = useDispatch();
   const [errormessage, setErrorMessage] = useState("");
   const [isLoading, setLoadingStae] = useState(false);
   const { setLoginState } = useContext(authContext);
@@ -38,8 +41,10 @@ function Login() {
         .then((res) => {
           localStorage.setItem("userData", JSON.stringify(res.data.user));
           localStorage.setItem("token", res.data.token);
+          dispatch(getUserCartProduct());
           setLoginState(true);
           setLoadingStae(false);
+
           if (location.pathname == "/login") {
             navigate("/")
           } else {

@@ -4,7 +4,8 @@ import "./navbar.css";
 import Sidebar from "./Sidebar";
 import { Link, NavLink } from "react-router-dom";
 import { authContext } from "../../Context/AuthContext";
-import { cartContext } from "../../Context/CartCount";
+import { useDispatch, useSelector } from "react-redux";
+import { setCartCount } from "../../Redux/cartSlice";
 const navigation = [
   { name: "Home", href: "/" },
   { name: "Women’s", href: "womarn" },
@@ -15,7 +16,8 @@ const navigation = [
 
 function Navbar() {
   const { isLogggedin, setLoginState } = useContext(authContext);
-  const {cartCount} =useContext(cartContext);
+  let {cartCount}=useSelector(store=>store.cart)
+  let dispatch = useDispatch()
   const [showSlide, setShowSlide] = useState(false);
   const userDate = JSON.parse(localStorage.getItem("userData"));
   console.log(userDate);
@@ -27,6 +29,8 @@ function Navbar() {
     localStorage.removeItem("token");
     localStorage.removeItem("userData");
     setLoginState(false);
+    dispatch(setCartCount(0))
+    
 
   }
   return (
