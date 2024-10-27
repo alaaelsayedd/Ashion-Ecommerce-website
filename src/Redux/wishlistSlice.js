@@ -29,10 +29,10 @@ let wishlistSlice = createSlice({
   },
   reducers: {
     setWishlistCount: (state, action) => {
-      state.cartCount = action.payload;
+      state.wishlistCount = action.payload;
     },
     setWishlistProducts: (state, action) => {
-      state.cartProducts = action.payload;
+      state.wishlistproduct = action.payload;
     },
    
   },

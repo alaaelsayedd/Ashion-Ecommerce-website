@@ -1,13 +1,8 @@
 import { useNavigate } from "react-router-dom";
 import "./product.css";
 import { motion, AnimatePresence } from "framer-motion";
-import { useEffect } from "react";
 function ProductCard({
-  image,
-  title,
-  price,
-  rate,
-  id,
+  product,
   addProductToCart,
   addProductToWishlist,
   wishlistIds,
@@ -17,14 +12,16 @@ function ProductCard({
     navigate(`/product/${id}`);
   }
   function setlovedProduct() {
-    return wishlistIds.find((product) => product.id == id) ? true : false;
+    return wishlistIds.find((item) => item == product.id)
+      ? true
+      : false;
   }
 
   return (
     <>
       <AnimatePresence mode="wait" className="w-full">
         <motion.div
-          key={title}
+          key={product.id}
           initial={{ y: 10, opacity: 0 }}
           animate={{ y: 0, opacity: 1 }}
           exit={{ y: -10, opacity: 0 }}
@@ -32,8 +29,8 @@ function ProductCard({
         >
           <div className="imge cursor-pointer ">
             <img
-              src={image}
-              alt={title}
+              src={product.imageCover}
+              alt={product.title}
               className="h-full w-full object-cover"
             />
             <div className="product-icons flex justify-center gap-2   transition-all duration-700">
@@ -45,7 +42,7 @@ function ProductCard({
                   strokeWidth="1.5"
                   stroke="currentColor"
                   className="size-6"
-                  onClick={() => addProductToCart(id)}
+                  onClick={() => addProductToCart(product.id)}
                 >
                   <path
                     strokeLinecap="round"
@@ -60,6 +57,7 @@ function ProductCard({
                     ? "bg-red-800 text-white  border-opacity-0"
                     : " text-neutral-700 hover:border-red-800 border-opacity-100"
                 }`}
+                onClick={() => addProductToWishlist(product.id)}
               >
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
@@ -68,7 +66,7 @@ function ProductCard({
                   strokeWidth="1.5"
                   stroke="currentColor"
                   className="size-6"
-                  onClick={() => addProductToWishlist(id)}
+                
                 >
                   <path
                     strokeLinecap="round"
@@ -79,7 +77,7 @@ function ProductCard({
               </div>
               <div
                 className="h-10 w-10 rounded-full border border-neutral-700  flex justify-center items-center text-neutral-700 hover:border-red-800"
-                onClick={() => getProductDetails(id)}
+                onClick={() => getProductDetails(product.id)}
               >
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
@@ -99,14 +97,14 @@ function ProductCard({
             </div>
           </div>
           <p className="text-center text-sm text-neutral-800 py-4 min-h-24">
-            {title}
+            {product.title.split(" ").slice(0, 8).join(" ")}
           </p>
           <div className="flex justify-between px-5 flex-row-reverse">
             <p className="flex items-baseline">
-              {rate}
+              {product.ratingsAverage}
               <i className="fa-solid fa-star px-1 text-yellow-400 text-sm"></i>
             </p>
-            <p className="font-bold">{price}$</p>
+            <p className="font-bold">{product.price}$</p>
           </div>
         </motion.div>
       </AnimatePresence>

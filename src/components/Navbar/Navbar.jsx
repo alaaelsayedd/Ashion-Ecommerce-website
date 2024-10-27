@@ -22,7 +22,7 @@ function Navbar() {
   let dispatch = useDispatch()
   const [showSlide, setShowSlide] = useState(false);
   const userDate = JSON.parse(localStorage.getItem("userData"));
-  console.log(userDate);
+  // console.log(userDate);
 
   function openSidebar() {
     setShowSlide(true);
@@ -30,10 +30,7 @@ function Navbar() {
   function logout() {
     localStorage.removeItem("token");
     localStorage.removeItem("userData");
-    setLoginState(false);
- 
-    
-
+    setLoginState(false); 
   }
   useEffect(()=>{
     dispatch(getUserCartProduct())
