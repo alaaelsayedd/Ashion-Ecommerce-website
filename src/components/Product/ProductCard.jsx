@@ -1,11 +1,23 @@
 import { useNavigate } from "react-router-dom";
 import "./product.css";
 import { motion, AnimatePresence } from "framer-motion";
-function ProductCard({ image, title, price, rate, id ,addProductToCart}) {
-  
+import { useEffect } from "react";
+function ProductCard({
+  image,
+  title,
+  price,
+  rate,
+  id,
+  addProductToCart,
+  addProductToWishlist,
+  wishlistIds,
+}) {
   const navigate = useNavigate();
   function getProductDetails(id) {
     navigate(`/product/${id}`);
+  }
+  function setlovedProduct() {
+    return wishlistIds.find((product) => product.id == id) ? true : false;
   }
 
   return (
@@ -33,7 +45,7 @@ function ProductCard({ image, title, price, rate, id ,addProductToCart}) {
                   strokeWidth="1.5"
                   stroke="currentColor"
                   className="size-6"
-                  onClick={()=>addProductToCart(id)}
+                  onClick={() => addProductToCart(id)}
                 >
                   <path
                     strokeLinecap="round"
@@ -42,7 +54,13 @@ function ProductCard({ image, title, price, rate, id ,addProductToCart}) {
                   />
                 </svg>
               </div>
-              <div className="h-10 w-10 rounded-full border border-neutral-700  flex justify-center items-center text-neutral-700 hover:border-red-800">
+              <div
+                className={`h-10 w-10 rounded-full border border-neutral-700  flex justify-center items-center ${
+                  setlovedProduct()
+                    ? "bg-red-800 text-white  border-opacity-0"
+                    : " text-neutral-700 hover:border-red-800 border-opacity-100"
+                }`}
+              >
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
                   fill="none"
@@ -50,6 +68,7 @@ function ProductCard({ image, title, price, rate, id ,addProductToCart}) {
                   strokeWidth="1.5"
                   stroke="currentColor"
                   className="size-6"
+                  onClick={() => addProductToWishlist(id)}
                 >
                   <path
                     strokeLinecap="round"

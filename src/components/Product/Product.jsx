@@ -4,13 +4,15 @@ import axios from "axios";
 import { authContext } from "../../Context/AuthContext";
 import { useNavigate } from "react-router-dom";
 import { Bounce, toast } from "react-toastify";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { getUserCartProduct, setCartCount } from "../../Redux/cartSlice";
+import { getUserWishListProduct } from "../../Redux/wishlistSlice";
 
 function Product({ products, categories, getCategoryProduct, getProduct }) {
   let dispatch = useDispatch();
   const [selecttab, setSelectTab] = useState("all");
   const { isLogggedin } = useContext(authContext);
+  let { wishlistproduct } = useSelector((store) => store.wishlist);
   const navigate = useNavigate();
   function displayCtaegoryExist() {
     let categoriesExist = categories.filter(
@@ -22,7 +24,28 @@ function Product({ products, categories, getCategoryProduct, getProduct }) {
 
     return categoriesExist;
   }
-  async function addProductToCart(id) {
+  
+   async function addProductToWishlist(id) {
+    if (isLogggedin) {
+      let { data } = await axios.post(
+        "https://ecommerce.routemisr.com/api/v1/wishlist",
+        {
+          productId: id,
+        },
+        {
+          headers: {
+            token: localStorage.getItem("token"),
+          },
+        }
+      );
+      dispatch(getUserWishListProduct());
+    
+      
+    } else {
+      navigate("/login");
+    }
+  }
+   async function addProductToCart(id) {
     if (isLogggedin) {
       let { data } = await axios.post(
         "https://ecommerce.routemisr.com/api/v1/cart",
@@ -47,7 +70,6 @@ function Product({ products, categories, getCategoryProduct, getProduct }) {
         theme: "light",
         transition: Bounce,
       });
-      console.log(data);
     } else {
       navigate("/login");
     }
@@ -103,6 +125,8 @@ function Product({ products, categories, getCategoryProduct, getProduct }) {
                 key={index}
                 id={product.id}
                 addProductToCart={addProductToCart}
+                addProductToWishlist={addProductToWishlist}
+                wishlistIds={wishlistproduct}
               />
             );
           })}

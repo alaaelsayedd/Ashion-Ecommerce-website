@@ -1,4 +1,4 @@
-import axios, { all } from "axios";
+import axios from "axios";
 import Header from "./Header";
 import "./home.css";
 import { useEffect, useState } from "react";
@@ -8,7 +8,6 @@ function Home() {
   const [currentpage, setCurrentPage] = useState("");
   const [pageNumber, setPageNumberPage] = useState("");
   const [categories, setCategoryData] = useState([]);
-  const [allProduct, setAllProduct] = useState([]);
   async function getProduct(lmit = 10, page = 1) {
     let { data } = await axios.get(
       `https://ecommerce.routemisr.com/api/v1/products?page=${page}&limit=${lmit}`

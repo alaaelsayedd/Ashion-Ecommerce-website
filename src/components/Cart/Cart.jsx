@@ -1,5 +1,5 @@
 import axios from "axios";
-import {  useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import "./cart.css";
 import Popup from "../Popup/Popup";
 import CartCard from "./CartCard";
@@ -13,9 +13,7 @@ import {
 } from "../../Redux/cartSlice";
 
 function Cart() {
-  let { cartProducts, totalCartPrice } = useSelector(
-    (store) => store.cart
-  );
+  let { cartProducts, totalCartPrice } = useSelector((store) => store.cart);
   let dispatch = useDispatch();
   const [isPopup, setPopUp] = useState(false);
   const [ProductDetails, setProductDetails] = useState({});
@@ -60,7 +58,7 @@ function Cart() {
             dispatch(setCartCount(0));
           }, 1000);
         })
-        .catch((err) => {
+        .catch(() => {
           setIsLoading(false);
           setDeleteState({
             message: "Fail Delete Items From cart",
@@ -87,7 +85,7 @@ function Cart() {
             closePop();
           }, 1000);
         })
-        .catch((err) => {
+        .catch(() => {
           setIsLoading(false);
           setDeleteState({ message: "Fail Delete Item", status: false });
         });
@@ -115,7 +113,7 @@ function Cart() {
   return (
     <>
       <div className="conatiner cart-cont  w-11/12 mx-auto my-10">
-        <h1 className="text-2xl uppercase  relative head">Your Cart Item </h1>
+        <h1 className="text-2xl uppercase  relative head">Your Cart Items </h1>
         {cartProducts.length > 0 ? (
           <>
             <div className="flex justify-end items-baseline gap-3">

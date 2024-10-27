@@ -1,11 +1,12 @@
-import { useContext, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import logo from "../../assets/logo.png";
 import "./navbar.css";
 import Sidebar from "./Sidebar";
 import { Link, NavLink } from "react-router-dom";
 import { authContext } from "../../Context/AuthContext";
 import { useDispatch, useSelector } from "react-redux";
-import { setCartCount } from "../../Redux/cartSlice";
+import { getUserCartProduct, setCartCount } from "../../Redux/cartSlice";
+import { getUserWishListProduct } from "../../Redux/wishlistSlice";
 const navigation = [
   { name: "Home", href: "/" },
   { name: "Women’s", href: "womarn" },
@@ -17,6 +18,7 @@ const navigation = [
 function Navbar() {
   const { isLogggedin, setLoginState } = useContext(authContext);
   let {cartCount}=useSelector(store=>store.cart)
+  let {wishlistCount}=useSelector(store=>store.wishlist)
   let dispatch = useDispatch()
   const [showSlide, setShowSlide] = useState(false);
   const userDate = JSON.parse(localStorage.getItem("userData"));
@@ -29,10 +31,15 @@ function Navbar() {
     localStorage.removeItem("token");
     localStorage.removeItem("userData");
     setLoginState(false);
-    dispatch(setCartCount(0))
+ 
     
 
   }
+  useEffect(()=>{
+    dispatch(getUserCartProduct())
+    dispatch(getUserWishListProduct())
+  },[])
+
   return (
     <>
       <nav className=" px-10 py-7 flex  gap-10 justify-between  border-b shadow-md ">
@@ -122,7 +129,7 @@ function Navbar() {
               viewBox="0 0 24 24"
               strokeWidth="1.5"
               stroke="currentColor"
-              className="size-6"
+              className="size-6 "
             >
               <path
                 strokeLinecap="round"
@@ -130,6 +137,7 @@ function Navbar() {
                 d="m21 21-5.197-5.197m0 0A7.5 7.5 0 1 0 5.196 5.196a7.5 7.5 0 0 0 10.607 10.607Z"
               />
             </svg>
+            <Link to={'/wishlist'} className="relative">
             <svg
               xmlns="http://www.w3.org/2000/svg"
               fill="none"
@@ -145,6 +153,8 @@ function Navbar() {
               />
             
             </svg>
+            <div className="bg-neutral-900 text-white h-5 w-5 text-center rounded-full absolute -right-2 -top-1/2 text-sm ">{wishlistCount}</div>
+            </Link>
           
             <Link to={'/cart'} className="relative">
             <svg

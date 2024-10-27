@@ -13,6 +13,7 @@ import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { Provider } from "react-redux";
 import { store } from "./Redux/store";
+import WishList from "./components/WishList/WishList";
 function App() {
   const router = createBrowserRouter([
     {
@@ -49,6 +50,14 @@ function App() {
           element: (
             <AuthProtectRoute>
               <Cart />
+            </AuthProtectRoute>
+          ),
+        },
+        {
+          path: "/wishlist",
+          element: (
+            <AuthProtectRoute>
+              <WishList />
             </AuthProtectRoute>
           ),
         },
