@@ -150,7 +150,7 @@ function Navbar() {
               />
             
             </svg>
-            <div className="bg-neutral-900 text-white h-5 w-5 text-center rounded-full absolute -right-2 -top-1/2 text-sm ">{wishlistCount}</div>
+            <div className="bg-neutral-900 text-white h-5 w-5 text-center rounded-full absolute -right-2 -top-1/2 text-sm  ">{wishlistCount}</div>
             </Link>
           
             <Link to={'/cart'} className="relative">

@@ -2,10 +2,15 @@ import Music from "../../assets/music1.jpg"
 import woman from "../../assets/womanFashion.jpg"
 import men from "../../assets/men.jpg"
 import baby from "../../assets/category-3.jpg"
-import supermaret from "../../assets/slider-image-1.jpeg"
+import supermaret from "../../assets/slider-image-3.jpeg"
 
 
-let categories = [{
+let categories = [
+  {
+    name:"SuperMarket",
+    image:supermaret
+  },
+  {
   name:"Women's Fashion",
   image:woman
 },{
@@ -17,10 +22,7 @@ let categories = [{
   image:baby
 },
 
-{
-  name:"SuperMarket",
-  image:supermaret
-},
+
 {
   name:"Music",
   image:Music
