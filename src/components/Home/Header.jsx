@@ -29,13 +29,13 @@ let categories = [{
 function Header() {
   return (
     <>
-      <div className="grid grid-cols-3  md:grid-cols-4 grid-rows-2  head-conatiner  gap-3  mt-5 ">
+      <div className="grid grid-cols-2 md:grid-cols-4    grid-rows-2  head-conatiner  gap-3  mt-5  ">
         {categories.map((category, index) => {
           return (
             <div
-              className="head-card  "
+              className="head-card  shadow-lg "
               key={index}
-              style={{ backgroundImage: `url(${category.image})`,backgroundPosition:"center",backgroundSize:"conatin" }}
+              style={{ backgroundImage: `url(${category.image})` }}
             >
               <div className="content text-xs  my-10 md:text-2xl ">
                 <h2> {category.name}</h2>

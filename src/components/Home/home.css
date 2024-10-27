@@ -1,5 +1,5 @@
 .head-conatiner {
-  height: 500px;
+  height: 600px;
 }
 .head-conatiner div.head-card {
   box-shadow: 1px 1px 3px rgb(214, 213, 213);
@@ -9,6 +9,7 @@
   align-items: center;
   background-position: center;
   background-size: cover;
+  
 }
 
 .head-conatiner div.head-card:first-child {
