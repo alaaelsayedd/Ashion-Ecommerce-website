@@ -11,6 +11,7 @@ import {
   setCartProducts,
   settotalCartPrice,
 } from "../../Redux/cartSlice";
+import Loading from "../Loading/Loading";
 
 function Cart() {
   let { cartProducts, totalCartPrice } = useSelector((store) => store.cart);
@@ -20,6 +21,8 @@ function Cart() {
   const [isLoading, setIsLoading] = useState(false);
   const [deleteState, setDeleteState] = useState({});
   const [closePopup, setClosepopup] = useState(false);
+  const [isFading, setIsFading] = useState(true);
+  const [loadingScreen, setLoadingScreen] = useState(false);
   function closePop() {
     setDeleteState("");
     setClosepopup(true);
@@ -108,88 +111,108 @@ function Cart() {
   }
 
   useEffect(() => {
-    dispatch(getUserCartProduct());
+    setLoadingScreen(true);
+    dispatch(getUserCartProduct()).then(() => {
+      setIsFading(false);
+      setTimeout(() => setLoadingScreen(false), 500);
+    });
   }, []);
   return (
     <>
-      <div className="conatiner cart-cont  w-11/12 mx-auto my-10">
-        <h1 className="text-2xl uppercase  relative head">Your Cart Items </h1>
-        {cartProducts.length > 0 ? (
-          <>
-            <div className="flex justify-end items-baseline gap-3">
-              <p className="text-neutral-800 text-lg">
-                TotalPrice : {totalCartPrice}
-                <span className="text-sm "> EG</span>
-              </p>
-              <button className="text-white bg-red-700 hover:bg-red-800 focus:ring-4 focus:outline-none focus:ring-red-300 font-medium rounded-lg text-sm  p-2    text-center ">
-                CheckOut
-              </button>
-            </div>
-            <div className="cards-item grid lg:grid-cols-3 grid-cols-2  px-1 md:px-10 justify-between items-baseline md:gap-10  gap-y-12  sm:gap-y-10 gap-x-4 my-10">
-              {cartProducts.map((product, index) => (
-                <CartCard
-                  product={product}
-                  key={index}
-                  ConfirmdeletItemformCart={ConfirmdeletItemformCart}
-                  updateCartQuantity={updateCartQuantity}
-                />
-              ))}
-              <Popup trigger={isPopup} closePopup={closePopup} close={closePop}>
-                <h2 className="text-center py-4 font-medium text-lg text-neutral-800">
-                  {" "}
-                  Delete {ProductDetails.title} From Cart
-                </h2>
-                <p className="text-center text-neutral-700 text-sm py-1">
-                  Are You Sure?
+      {loadingScreen ? (
+        <div
+          className={`fixed top-0 left-0 right-0 bottom-0 bg-gray-100 flex justify-center   items-center text-pink-600 transition   duration-500 ${
+            !isFading && "opacity-0 " 
+          }`}
+        >
+          <Loading />
+        </div>
+      ) : (
+        <div className="conatiner cart-cont  w-11/12 mx-auto my-10">
+          <h1 className="text-2xl uppercase  relative head">
+            Your Cart Items{" "}
+          </h1>
+          {cartProducts.length > 0 ? (
+            <>
+              <div className="flex justify-end items-baseline gap-3">
+                <p className="text-neutral-800 text-lg">
+                  TotalPrice : {totalCartPrice}
+                  <span className="text-sm "> EG</span>
                 </p>
-                {isLoading && (
-                  <i className="fas fa-spinner fa-spin py-2 text-neutral-900 text-center text-lg block"></i>
-                )}
-                {deleteState.status ? (
-                  <p className="text-green-600 py-2 text-center">
-                    {deleteState.message}
-                  </p>
-                ) : (
-                  <p className="text-red-600 py-2 text-center">
-                    {deleteState.message}
-                  </p>
-                )}
-
-                <button
-                  className={`text-white bg-red-700 hover:bg-red-800  font-medium rounded-lg text-sm  py-2 w-1/3 block   mx-auto mb-5  text-center ${
-                    isLoading &&
-                    "bg-red-800 bg-opacity-80 cursor-not-allowed hover:bg-opacity-80"
-                  }`}
-                  disabled={isLoading}
-                  onClick={deleteItemFromCart}
-                >
-                  Delete
+                <button className="text-white bg-red-700 hover:bg-red-800 focus:ring-4 focus:outline-none focus:ring-red-300 font-medium rounded-lg text-sm  p-2    text-center ">
+                  CheckOut
                 </button>
-              </Popup>
-            </div>
-            <button
-              className="text-white bg-red-700 hover:bg-red-800  font-medium rounded-lg text-sm  py-2 w-1/5 block  mx-auto  text-center "
-              onClick={() => {
-                setProductDetails({ title: " All Items " });
-                setPopUp(true);
-              }}
-            >
-              Clear Cart
-            </button>
-          </>
-        ) : (
-          <p className="text-2xl mt-10 mb-5 text-center font-semibold">
-            Your Cart Is Empty{" "}
-            <Link
-              className="text-red-700 text-xl underline   rounded-lg  cursor-pointer"
-              to={"/"}
-            >
-              {" "}
-              Shop Now{" "}
-            </Link>
-          </p>
-        )}
-      </div>
+              </div>
+              <div className="cards-item grid lg:grid-cols-3 grid-cols-2  px-1 md:px-10 justify-between items-baseline md:gap-10  gap-y-12  sm:gap-y-10 gap-x-4 my-10">
+                {cartProducts.map((product, index) => (
+                  <CartCard
+                    product={product}
+                    key={index}
+                    ConfirmdeletItemformCart={ConfirmdeletItemformCart}
+                    updateCartQuantity={updateCartQuantity}
+                  />
+                ))}
+                <Popup
+                  trigger={isPopup}
+                  closePopup={closePopup}
+                  close={closePop}
+                >
+                  <h2 className="text-center py-4 font-medium text-lg text-neutral-800">
+                    {" "}
+                    Delete {ProductDetails.title} From Cart
+                  </h2>
+                  <p className="text-center text-neutral-700 text-sm py-1">
+                    Are You Sure?
+                  </p>
+                  {isLoading && (
+                    <i className="fas fa-spinner fa-spin py-2 text-neutral-900 text-center text-lg block"></i>
+                  )}
+                  {deleteState.status ? (
+                    <p className="text-green-600 py-2 text-center">
+                      {deleteState.message}
+                    </p>
+                  ) : (
+                    <p className="text-red-600 py-2 text-center">
+                      {deleteState.message}
+                    </p>
+                  )}
+
+                  <button
+                    className={`text-white bg-red-700 hover:bg-red-800  font-medium rounded-lg text-sm  py-2 w-1/3 block   mx-auto mb-5  text-center ${
+                      isLoading &&
+                      "bg-red-800 bg-opacity-80 cursor-not-allowed hover:bg-opacity-80"
+                    }`}
+                    disabled={isLoading}
+                    onClick={deleteItemFromCart}
+                  >
+                    Delete
+                  </button>
+                </Popup>
+              </div>
+              <button
+                className="text-white bg-red-700 hover:bg-red-800  font-medium rounded-lg text-sm  py-2 w-1/5 block  mx-auto  text-center "
+                onClick={() => {
+                  setProductDetails({ title: " All Items " });
+                  setPopUp(true);
+                }}
+              >
+                Clear Cart
+              </button>
+            </>
+          ) : (
+            <p className="text-2xl mt-10 mb-5 text-center font-semibold">
+              Your Cart Is Empty{" "}
+              <Link
+                className="text-red-700 text-xl underline   rounded-lg  cursor-pointer"
+                to={"/"}
+              >
+                {" "}
+                Shop Now{" "}
+              </Link>
+            </p>
+          )}
+        </div>
+      )}
     </>
   );
 }

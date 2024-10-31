@@ -6,12 +6,17 @@ import { useNavigate } from "react-router-dom";
 import { Bounce, toast } from "react-toastify";
 import { useDispatch, useSelector } from "react-redux";
 import { getUserCartProduct } from "../../Redux/cartSlice";
-import {
-  getUserWishListProduct,
-  setWishlistProducts,
-} from "../../Redux/wishlistSlice";
+import { getUserWishListProduct } from "../../Redux/wishlistSlice";
+import Loading from "../Loading/Loading";
 
-function Product({ products, categories, getCategoryProduct, getProduct }) {
+function Product({
+  products,
+  categories,
+  getCategoryProduct,
+  getProduct,
+  loadingProduct,
+  isFading,
+}) {
   let dispatch = useDispatch();
   const [selecttab, setSelectTab] = useState("all");
   const { isLogggedin } = useContext(authContext);
@@ -79,13 +84,14 @@ function Product({ products, categories, getCategoryProduct, getProduct }) {
         }
       );
       dispatch(getUserCartProduct());
-      toast.info(data.message, {
+
+      toast.success(data.message, {
         position: "bottom-right",
         autoClose: 4000,
-        hideProgressBar: false,
+        hideProgressBar: true,
         closeOnClick: true,
         pauseOnHover: true,
-        draggable: false,
+        draggable: true,
         progress: undefined,
         theme: "light",
         transition: Bounce,
@@ -95,11 +101,13 @@ function Product({ products, categories, getCategoryProduct, getProduct }) {
     }
   }
   useEffect(() => {
-    dispatch(getUserWishListProduct());
+    if (isLogggedin) {
+      dispatch(getUserWishListProduct());
+    }
   }, []);
   useEffect(() => {
     setWishlistIds(wishlistproduct.map((product) => product.id));
-  },[wishlistproduct]);
+  }, [wishlistproduct]);
   return (
     <>
       <div className="my-12  w-full  md:w-4/5 mx-auto p-2 ">
@@ -139,26 +147,35 @@ function Product({ products, categories, getCategoryProduct, getProduct }) {
             </ul>
           </nav>
         </div>
+        {loadingProduct ? (
+          <div
+            className={`container h-72 flex justify-center items-center transition duration-300  transform ${
+              !isFading ? "opacity-0 scale-0 " : "opacity-100  scale-75"
+            }`}
+          >
+            <Loading />
+          </div>
+        ) : (
+          <div className="container grid-cols-2 grid   md:grid-cols-3  lg:grid-cols-4  gap-x-5 gap-y-6 items-baseline">
+            {products?.map((product, index) => {
+              return (
+                <ProductCard
+                  product={product}
+                  key={index}
+                  addProductToCart={addProductToCart}
+                  addProductToWishlist={addProductToWishlist}
+                  wishlistIds={wishlistIds}
+                />
+              );
+            })}
 
-        <div className="container grid-cols-2 grid   md:grid-cols-3  lg:grid-cols-4  gap-x-5 gap-y-6 items-baseline">
-          {products?.map((product, index) => {
-            return (
-              <ProductCard
-                product={product}
-                key={index}
-                addProductToCart={addProductToCart}
-                addProductToWishlist={addProductToWishlist}
-                wishlistIds={wishlistIds}
-              />
-            );
-          })}
-
-          {products == [] && (
-            <p className="text-center text-xl py-5 font-bold">
-              No Products Found
-            </p>
-          )}
-        </div>
+            {products == [] && (
+              <p className="text-center text-xl py-5 font-bold">
+                No Products Found
+              </p>
+            )}
+          </div>
+        )}
       </div>
     </>
   );
