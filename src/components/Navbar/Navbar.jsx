@@ -6,7 +6,10 @@ import { Link, NavLink } from "react-router-dom";
 import { authContext } from "../../Context/AuthContext";
 import { useDispatch, useSelector } from "react-redux";
 import { getUserCartProduct, setCartCount } from "../../Redux/cartSlice";
-import { getUserWishListProduct } from "../../Redux/wishlistSlice";
+import {
+  getUserWishListProduct,
+  setWishlistCount,
+} from "../../Redux/wishlistSlice";
 const navigation = [
   { name: "Home", href: "/" },
   { name: "Women’s", href: "womarn" },
@@ -22,7 +25,6 @@ function Navbar() {
   let dispatch = useDispatch();
   const [showSlide, setShowSlide] = useState(false);
   const userDate = JSON.parse(localStorage.getItem("userData"));
-  const [dropDown, setDropDownStatus] = useState(false);
 
   function openSidebar() {
     setShowSlide(true);
@@ -32,11 +34,16 @@ function Navbar() {
     localStorage.removeItem("userData");
     setLoginState(false);
   }
-  
+
   useEffect(() => {
-    dispatch(getUserCartProduct());
-    dispatch(getUserWishListProduct());
-  }, []);
+    if (isLogggedin) {
+      dispatch(getUserCartProduct());
+      dispatch(getUserWishListProduct());
+    } else {
+      dispatch(setCartCount(0));
+      dispatch(setWishlistCount(0));
+    }
+  }, [isLogggedin]);
 
   return (
     <>
@@ -123,7 +130,6 @@ function Navbar() {
                     stroke-width="1.5"
                     stroke="currentColor"
                     class="size-8 text-neutral-900 cursor-pointer inline"
-                   
                   >
                     <path
                       stroke-linecap="round"
@@ -131,7 +137,7 @@ function Navbar() {
                       d="M17.982 18.725A7.488 7.488 0 0 0 12 15.75a7.488 7.488 0 0 0-5.982 2.975m11.963 0a9 9 0 1 0-11.963 0m11.963 0A8.966 8.966 0 0 1 12 21a8.966 8.966 0 0 1-5.982-2.275M15 9.75a3 3 0 1 1-6 0 3 3 0 0 1 6 0Z"
                     />
                   </svg>
-                
+
                   <ul className="absolute flex flex-col   -left-1/2  bg-neutral-900 bg-opacity-80 text-sm  rounded-sm  text-white">
                     <li className="border-b border-neutral-800  p-3 text-xs">
                       {userDate.email}
