@@ -17,12 +17,12 @@ const navigation = [
 
 function Navbar() {
   const { isLogggedin, setLoginState } = useContext(authContext);
-  let {cartCount}=useSelector(store=>store.cart)
-  let {wishlistCount}=useSelector(store=>store.wishlist)
-  let dispatch = useDispatch()
+  let { cartCount } = useSelector((store) => store.cart);
+  let { wishlistCount } = useSelector((store) => store.wishlist);
+  let dispatch = useDispatch();
   const [showSlide, setShowSlide] = useState(false);
   const userDate = JSON.parse(localStorage.getItem("userData"));
-  // console.log(userDate);
+  const [dropDown, setDropDownStatus] = useState(false);
 
   function openSidebar() {
     setShowSlide(true);
@@ -30,12 +30,13 @@ function Navbar() {
   function logout() {
     localStorage.removeItem("token");
     localStorage.removeItem("userData");
-    setLoginState(false); 
+    setLoginState(false);
   }
-  useEffect(()=>{
-    dispatch(getUserCartProduct())
-    dispatch(getUserWishListProduct())
-  },[])
+  
+  useEffect(() => {
+    dispatch(getUserCartProduct());
+    dispatch(getUserWishListProduct());
+  }, []);
 
   return (
     <>
@@ -62,7 +63,7 @@ function Navbar() {
           </svg>
         </button>
         <ul className={`  list-none  gap-6 items-baseline fl hidden md:flex `}>
-          {navigation.map((navItem ,index) => {
+          {navigation.map((navItem, index) => {
             return (
               <li className={`link text-neutral-800   font-medium`} key={index}>
                 <NavLink to={navItem.href}>{navItem.name}</NavLink>
@@ -113,14 +114,41 @@ function Navbar() {
             ) : (
               <>
                 {" "}
-                <div onClick={logout} className="cursor-pointer">
-                  Logout
+                <div className="relative dropdown ">
+                  <span>{userDate.name}</span>
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                    stroke-width="1.5"
+                    stroke="currentColor"
+                    class="size-8 text-neutral-900 cursor-pointer inline"
+                   
+                  >
+                    <path
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                      d="M17.982 18.725A7.488 7.488 0 0 0 12 15.75a7.488 7.488 0 0 0-5.982 2.975m11.963 0a9 9 0 1 0-11.963 0m11.963 0A8.966 8.966 0 0 1 12 21a8.966 8.966 0 0 1-5.982-2.275M15 9.75a3 3 0 1 1-6 0 3 3 0 0 1 6 0Z"
+                    />
+                  </svg>
+                
+                  <ul className="absolute flex flex-col   -left-1/2  bg-neutral-900 bg-opacity-80 text-sm  rounded-sm  text-white">
+                    <li className="border-b border-neutral-800  p-3 text-xs">
+                      {userDate.email}
+                    </li>
+                    <li
+                      className=" p-3 cursor-pointer hover:bg-neutral-800 transition duration-150"
+                      onClick={logout}
+                    >
+                      Logout
+                    </li>
+                  </ul>
                 </div>
               </>
             )}
           </div>
           <div className="icons flex gap-3 ">
-            <svg
+            {/* <svg
               xmlns="http://www.w3.org/2000/svg"
               fill="none"
               viewBox="0 0 24 24"
@@ -133,43 +161,45 @@ function Navbar() {
                 strokeLinejoin="round"
                 d="m21 21-5.197-5.197m0 0A7.5 7.5 0 1 0 5.196 5.196a7.5 7.5 0 0 0 10.607 10.607Z"
               />
-            </svg>
-            <Link to={'/wishlist'} className="relative">
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              fill="none"
-              viewBox="0 0 24 24"
-              strokeWidth="1.5"
-              stroke="currentColor"
-              className="size-6 cart "
-            >
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                d="M21 8.25c0-2.485-2.099-4.5-4.688-4.5-1.935 0-3.597 1.126-4.312 2.733-.715-1.607-2.377-2.733-4.313-2.733C5.1 3.75 3 5.765 3 8.25c0 7.22 9 12 9 12s9-4.78 9-12Z"
-              />
-            
-            </svg>
-            <div className="bg-neutral-900 text-white h-5 w-5 text-center rounded-full absolute -right-2 -top-1/2 text-sm  ">{wishlistCount}</div>
+            </svg> */}
+            <Link to={"/wishlist"} className="relative">
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                fill="none"
+                viewBox="0 0 24 24"
+                strokeWidth="1.5"
+                stroke="currentColor"
+                className="size-6 cart "
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  d="M21 8.25c0-2.485-2.099-4.5-4.688-4.5-1.935 0-3.597 1.126-4.312 2.733-.715-1.607-2.377-2.733-4.313-2.733C5.1 3.75 3 5.765 3 8.25c0 7.22 9 12 9 12s9-4.78 9-12Z"
+                />
+              </svg>
+              <div className="bg-neutral-900 text-white h-5 w-5 text-center rounded-full absolute -right-2 -top-1/2 text-sm  ">
+                {wishlistCount}
+              </div>
             </Link>
-          
-            <Link to={'/cart'} className="relative">
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              fill="none"
-              viewBox="0 0 24 24"
-              strokeWidth="1.5"
-              stroke="currentColor"
-              className="size-6  "
-            
-            >
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                d="M15.75 10.5V6a3.75 3.75 0 1 0-7.5 0v4.5m11.356-1.993 1.263 12c.07.665-.45 1.243-1.119 1.243H4.25a1.125 1.125 0 0 1-1.12-1.243l1.264-12A1.125 1.125 0 0 1 5.513 7.5h12.974c.576 0 1.059.435 1.119 1.007ZM8.625 10.5a.375.375 0 1 1-.75 0 .375.375 0 0 1 .75 0Zm7.5 0a.375.375 0 1 1-.75 0 .375.375 0 0 1 .75 0Z"
-              />
-            </svg>
-            <div className="bg-neutral-900 text-white h-5 w-5 text-center rounded-full absolute -right-2 -top-1/2 text-sm ">{cartCount}</div>
+
+            <Link to={"/cart"} className="relative">
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                fill="none"
+                viewBox="0 0 24 24"
+                strokeWidth="1.5"
+                stroke="currentColor"
+                className="size-6  "
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  d="M15.75 10.5V6a3.75 3.75 0 1 0-7.5 0v4.5m11.356-1.993 1.263 12c.07.665-.45 1.243-1.119 1.243H4.25a1.125 1.125 0 0 1-1.12-1.243l1.264-12A1.125 1.125 0 0 1 5.513 7.5h12.974c.576 0 1.059.435 1.119 1.007ZM8.625 10.5a.375.375 0 1 1-.75 0 .375.375 0 0 1 .75 0Zm7.5 0a.375.375 0 1 1-.75 0 .375.375 0 0 1 .75 0Z"
+                />
+              </svg>
+              <div className="bg-neutral-900 text-white h-5 w-5 text-center rounded-full absolute -right-2 -top-1/2 text-sm ">
+                {cartCount}
+              </div>
             </Link>
           </div>
         </div>

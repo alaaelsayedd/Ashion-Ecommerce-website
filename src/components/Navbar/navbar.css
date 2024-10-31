@@ -82,8 +82,10 @@
   -moz-transform: translateY(8px);
   -ms-transform: translateY(8px);
   -o-transform: translateY(8px);
+  visibility: hidden;
 }
 .dropdown:hover ul {
+ visibility: visible;
   opacity: 1;
   transform: translateY(0px);
   -webkit-transform: translateY(0px);
