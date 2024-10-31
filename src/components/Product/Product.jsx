@@ -106,8 +106,15 @@ function Product({
     }
   }, []);
   useEffect(() => {
-    setWishlistIds(wishlistproduct.map((product) => product.id));
-  }, [wishlistproduct]);
+    if(isLogggedin)
+    {
+      setWishlistIds(wishlistproduct.map((product) => product.id));
+    }
+    else{
+      setWishlistIds([])
+    }
+  
+  }, [wishlistproduct,isLogggedin]);
   return (
     <>
       <div className="my-12  w-full  md:w-4/5 mx-auto p-2 ">
