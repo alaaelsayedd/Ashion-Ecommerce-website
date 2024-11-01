@@ -137,9 +137,9 @@ function Cart() {
                 TotalPrice : {totalCartPrice}
                 <span className="text-sm "> EG</span>
               </p>
-              <button className="text-white bg-red-700 hover:bg-red-800 focus:ring-4 focus:outline-none focus:ring-red-300 font-medium rounded-lg text-sm  p-2    text-center ">
+              <Link className="text-white bg-red-700 hover:bg-red-800 focus:ring-4 focus:outline-none focus:ring-red-300 font-medium rounded-lg text-sm  p-2    text-center " to={'/checkout'}>
                 CheckOut
-              </button>
+              </Link>
             </div>
             <div className="cards-item grid lg:grid-cols-3 grid-cols-2  px-1 md:px-10 justify-between items-baseline md:gap-10  gap-y-12  sm:gap-y-10 gap-x-4 my-10">
               {cartProducts.map((product, index) => (

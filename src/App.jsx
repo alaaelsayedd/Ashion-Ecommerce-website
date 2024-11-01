@@ -14,6 +14,8 @@ import "react-toastify/dist/ReactToastify.css";
 import { Provider } from "react-redux";
 import { store } from "./Redux/store";
 import WishList from "./components/WishList/WishList";
+import Order from "./components/Order/Order";
+import Checkout from "./components/Checkout/Checkout";
 function App() {
   const router = createBrowserRouter([
     {
@@ -61,6 +63,22 @@ function App() {
             </AuthProtectRoute>
           ),
         },
+        {
+          path: "/order/allorders",
+          element: (
+            <AuthProtectRoute>
+              <Order />
+            </AuthProtectRoute>
+          ),
+        },
+        {
+          path: "/checkout",
+          element: (
+            <AuthProtectRoute>
+              <Checkout />
+            </AuthProtectRoute>
+          ),
+        }
       ],
     },
   ]);

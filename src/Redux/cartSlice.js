@@ -11,6 +11,7 @@ export let getUserCartProduct = createAsyncThunk(
         },
       }
     );
+    console.log(data);
     return data;
   }
 );
@@ -20,12 +21,14 @@ let cartSlice = createSlice({
     cartProducts: [],
     totalCartPrice: 0,
     cartCount: 0,
+    cartId: "",
   },
   extraReducers: (builder) => {
     builder.addCase(getUserCartProduct.fulfilled, (state, action) => {
       state.cartProducts = action.payload.data.products;
       state.totalCartPrice = action.payload.data.totalCartPrice;
       state.cartCount = action.payload.numOfCartItems;
+      state.cartId = action.payload.cartId;
     });
   },
   reducers: {
@@ -41,4 +44,5 @@ let cartSlice = createSlice({
   },
 });
 export let cartReducer = cartSlice.reducer;
-export let { setCartCount,setCartProducts,settotalCartPrice } = cartSlice.actions;
+export let { setCartCount, setCartProducts, settotalCartPrice } =
+  cartSlice.actions;

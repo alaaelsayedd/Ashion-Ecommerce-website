@@ -53,7 +53,7 @@ function Navbar() {
             <img src={logo} alt="logo" />
           </Link>
         </div>
-        <button className="md:hidden" onClick={openSidebar}>
+        <button className="lg:hidden" onClick={openSidebar}>
           <svg
             xmlns="http://www.w3.org/2000/svg"
             fill="none"
@@ -69,7 +69,7 @@ function Navbar() {
             />
           </svg>
         </button>
-        <ul className={`  list-none  gap-6 items-baseline fl hidden md:flex `}>
+        <ul className={`  list-none  gap-6 items-baseline fl hidden lg:flex `}>
           {navigation.map((navItem, index) => {
             return (
               <li className={`link text-neutral-800   font-medium`} key={index}>
@@ -79,23 +79,25 @@ function Navbar() {
           })}
 
           <li
-            className={`link text-neutral-800  relative  font-medium  dropdown`}
+            className={`link text-neutral-800  relative  font-medium  dropdown `}
           >
             <a href="#">Pages</a>
-            <ul className="absolute flex flex-col gap-2  left-0  bg-neutral-900 bg-opacity-80 text-sm  rounded-sm  text-white">
-              <li className="border-b border-neutral-800 px-5 pt-2 pb-1 ">
+            <ul className="absolute flex flex-col  left-0  z-50 bg-neutral-900 bg-opacity-90 text-sm  rounded-sm text-white">
+              <li className="border-b border-neutral-800 p-4  hover:bg-neutral-600 transition duration-150">
                 <a href="#">ProductCart</a>
               </li>
-              <li className="border-b border-neutral-800  px-5 py-1">
+              
+              <li className="border-b border-neutral-800  p-4  hover:bg-neutral-600 transition duration-150" >
                 <a href="#">ProductDetails</a>
               </li>
-              <li className=" px-5 py-1 pb-2">
-                <a href="#">Orders</a>
+              <li className=" p-4  hover:bg-neutral-600 transition duration-100">
+                <Link to={"/order/allorders"}>Orders</Link>
               </li>
+            
             </ul>
           </li>
         </ul>
-        <div className=" hidden md:flex gap-3 items-center">
+        <div className=" hidden lg:flex items-center">
           <div className="auth text-neutral-600 text-sm ">
             {!isLogggedin ? (
               <>
@@ -121,29 +123,29 @@ function Navbar() {
             ) : (
               <>
                 {" "}
-                <div className="relative dropdown ">
-                  <span>{userDate.name}</span>
+                <div className="relative dropdown me-5 ">
+                  <span className="text-sm">{userDate.name}</span>
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
                     fill="none"
                     viewBox="0 0 24 24"
-                    stroke-width="1.5"
+                    strokeWidth="1.5"
                     stroke="currentColor"
-                    class="size-8 text-neutral-900 cursor-pointer inline"
+                    className="size-8 text-neutral-900 cursor-pointer inline"
                   >
                     <path
-                      stroke-linecap="round"
-                      stroke-linejoin="round"
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
                       d="M17.982 18.725A7.488 7.488 0 0 0 12 15.75a7.488 7.488 0 0 0-5.982 2.975m11.963 0a9 9 0 1 0-11.963 0m11.963 0A8.966 8.966 0 0 1 12 21a8.966 8.966 0 0 1-5.982-2.275M15 9.75a3 3 0 1 1-6 0 3 3 0 0 1 6 0Z"
                     />
                   </svg>
 
-                  <ul className="absolute flex flex-col   -left-1/2  bg-neutral-900 bg-opacity-80 text-sm  rounded-sm  text-white">
-                    <li className="border-b border-neutral-800  p-3 text-xs">
+                  <ul className="absolute flex flex-col  shadow-sm -left-1/2  bg-neutral-800  text-sm  rounded-md  text-neutral-50">
+                    <li className="border-b border-neutral-700  p-3 text-xs">
                       {userDate.email}
                     </li>
                     <li
-                      className=" p-3 cursor-pointer hover:bg-neutral-800 transition duration-150"
+                      className=" p-3 cursor-pointer hover:bg-neutral-600 transition duration-150"
                       onClick={logout}
                     >
                       Logout
@@ -153,7 +155,7 @@ function Navbar() {
               </>
             )}
           </div>
-          <div className="icons flex gap-3 ">
+          <div className="icons flex gap-5 ">
             {/* <svg
               xmlns="http://www.w3.org/2000/svg"
               fill="none"

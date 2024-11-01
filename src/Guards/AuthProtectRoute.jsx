@@ -6,7 +6,7 @@ function AuthProtectRoute({children}) {
     const { isLogggedin } = useContext(authContext);
     return (
         <>
-       {isLogggedin ? children : <Login></Login>}
+       {isLogggedin ? children : <Login/>}
         </> 
      );
 }
