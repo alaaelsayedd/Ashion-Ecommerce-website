@@ -9,7 +9,7 @@ import { getUserCartProduct } from "../../Redux/cartSlice";
 import { getUserWishListProduct } from "../../Redux/wishlistSlice";
 import Loading from "../Loading/Loading";
 
-function Product({
+function Products({
   products,
   categories,
   getCategoryProduct,
@@ -188,4 +188,4 @@ function Product({
   );
 }
 
-export default Product;
+export default Products;

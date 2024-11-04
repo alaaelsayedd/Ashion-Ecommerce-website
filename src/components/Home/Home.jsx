@@ -2,9 +2,10 @@ import axios from "axios";
 import Header from "./Header";
 import "./home.css";
 import { useEffect, useState } from "react";
-import Product from "../Product/Product";
+import Products from "../Product/Products";
 import Loading from "../Loading/Loading";
-import { div } from "framer-motion/client";
+import SimpleSlider from "../Slider/Slider";
+
 function Home() {
   const [product, setProduct] = useState([]);
   const [loadingProduct, setLoadingProduct] = useState(false);
@@ -68,7 +69,7 @@ function Home() {
   }, []);
   return (
     <>
-     <Header />
+      <Header />
       {loadingScreen ? (
         <div
           className={`fixed top-0 left-0 right-0 bottom-0 bg-gray-100 flex justify-center items-center text-pink-600 transition   duration-1000 ${
@@ -79,8 +80,7 @@ function Home() {
         </div>
       ) : (
         <>
-         
-          <Product
+          <Products
             products={product}
             categories={categories}
             getCategoryProduct={getCategoryProduct}
@@ -107,6 +107,7 @@ function Home() {
           </div>
         </>
       )}
+      <SimpleSlider />
     </>
   );
 }

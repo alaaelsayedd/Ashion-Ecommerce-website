@@ -3,6 +3,8 @@ import Home from "./components/Home/Home";
 import Layout from "./components/Layout/Layout";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import Login from "./components/Login/Login";
+import "slick-carousel/slick/slick.css";
+import "slick-carousel/slick/slick-theme.css";
 import Signup from "./components/Signup/Signup";
 import AuthContextProier from "./Context/AuthContext";
 import ProtectRoute from "./Guards/ProtectRoutes";
@@ -16,6 +18,7 @@ import { store } from "./Redux/store";
 import WishList from "./components/WishList/WishList";
 import Order from "./components/Order/Order";
 import Checkout from "./components/Checkout/Checkout";
+
 function App() {
   const router = createBrowserRouter([
     {
@@ -78,7 +81,7 @@ function App() {
               <Checkout />
             </AuthProtectRoute>
           ),
-        }
+        },
       ],
     },
   ]);

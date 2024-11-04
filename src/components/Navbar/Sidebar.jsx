@@ -26,9 +26,9 @@ function Sidebar({ setShowSlide }) {
 
   return (
     <>
-      <div className="absolute left-0 bottom-0 right-0 top-0 bg-black bg-opacity-10 z-10 md:hidden ">
+      <div className="absolute left-0 bottom-0 right-0 top-0 bg-black bg-opacity-10 z-10 lg:hidden ">
         <div
-          className=" w-4/6 sm:w-1/4  bg-white fixed top-0 bottom-0 p-5  transition-all duration-500 "
+          className=" w-4/6 sm:w-1/2   bg-white fixed top-0 bottom-0 p-5  transition-all duration-500 "
           ref={containerDiv}
         >
           <div className="close-icon   flex justify-end my-2 ">
