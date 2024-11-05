@@ -22,6 +22,7 @@ import Men from "./components/Pages/Men";
 import Women from "./components/Pages/Women";
 import Shop from "./components/Pages/Shop";
 import ContactForm from "./components/Contact/Conatct";
+import Brands from "./components/Brands/Brands";
 
 function App() {
   const router = createBrowserRouter([
@@ -108,6 +109,12 @@ function App() {
           path: "/contact",
           element: (
             <ContactForm/>
+          ),
+        },
+        {
+          path: "/brands",
+          element: (
+            <Brands/>
           ),
         },
       ],

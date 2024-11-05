@@ -73,7 +73,7 @@ function Navbar() {
         <ul className={`  list-none  gap-7 items-baseline fl hidden lg:flex `}>
           {navigation.map((navItem, index) => {
             return (
-              <li className={`link text-neutral-700  font-medium uppercase `} key={index}>
+              <li className={`link text-neutral-700  font-medium  text-base uppercase `} key={index}>
                 <NavLink to={navItem.href}>{navItem.name}</NavLink>
               </li>
             );
