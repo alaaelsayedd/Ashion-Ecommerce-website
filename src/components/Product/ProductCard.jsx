@@ -7,6 +7,7 @@ import { getUserWishListProduct } from "../../Redux/wishlistSlice";
 import { Bounce, toast } from "react-toastify";
 import axios from "axios";
 import { useContext, useEffect, useState } from "react";
+import { getUserCartProduct } from "../../Redux/cartSlice";
 function ProductCard({
   product,
   addProductToCart,

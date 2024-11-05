@@ -1,15 +1,15 @@
 import { useEffect, useRef } from "react";
 import logo from "../../assets/logo.png";
 import "./navbar.css";
-function Sidebar({ setShowSlide }) {
+import { Link, NavLink } from "react-router-dom";
+function Sidebar({ setShowSlide, wishlistCount, cartCount, isLogggedin,logout }) {
   const containerDiv = useRef(null);
   function closeSidebar() {
     let divWidth = containerDiv.current.offsetWidth;
     containerDiv.current.style.left = `-${divWidth}px`;
     setTimeout(() => {
-        setShowSlide(false);
-      }, 600);
-    
+      setShowSlide(false);
+    }, 600);
   }
   function animateDiv() {
     let divWidth = containerDiv.current.offsetWidth;
@@ -18,11 +18,9 @@ function Sidebar({ setShowSlide }) {
       containerDiv.current.style.left = `0px`;
     }, 2);
   }
-  useEffect(()=>{
+  useEffect(() => {
     animateDiv();
-  },[])
-
-
+  }, []);
 
   return (
     <>
@@ -55,7 +53,7 @@ function Sidebar({ setShowSlide }) {
               viewBox="0 0 24 24"
               strokeWidth="1.5"
               stroke="currentColor"
-              className="size-6 cursor-pointer"
+              className="size-6 cursor-pointer relative "
             >
               <path
                 strokeLinecap="round"
@@ -63,34 +61,44 @@ function Sidebar({ setShowSlide }) {
                 d="m21 21-5.197-5.197m0 0A7.5 7.5 0 1 0 5.196 5.196a7.5 7.5 0 0 0 10.607 10.607Z"
               />
             </svg>
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              fill="none"
-              viewBox="0 0 24 24"
-              strokeWidth="1.5"
-              stroke="currentColor"
-              className="size-6 cursor-pointer"
-            >
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                d="M21 8.25c0-2.485-2.099-4.5-4.688-4.5-1.935 0-3.597 1.126-4.312 2.733-.715-1.607-2.377-2.733-4.313-2.733C5.1 3.75 3 5.765 3 8.25c0 7.22 9 12 9 12s9-4.78 9-12Z"
-              />
-            </svg>
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              fill="none"
-              viewBox="0 0 24 24"
-              strokeWidth="1.5"
-              stroke="currentColor"
-              className="size-6 cursor-pointer"
-            >
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                d="M15.75 10.5V6a3.75 3.75 0 1 0-7.5 0v4.5m11.356-1.993 1.263 12c.07.665-.45 1.243-1.119 1.243H4.25a1.125 1.125 0 0 1-1.12-1.243l1.264-12A1.125 1.125 0 0 1 5.513 7.5h12.974c.576 0 1.059.435 1.119 1.007ZM8.625 10.5a.375.375 0 1 1-.75 0 .375.375 0 0 1 .75 0Zm7.5 0a.375.375 0 1 1-.75 0 .375.375 0 0 1 .75 0Z"
-              />
-            </svg>
+            <Link className="relative" to={"/wishlist"}>
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                fill="none"
+                viewBox="0 0 24 24"
+                strokeWidth="1.5"
+                stroke="currentColor"
+                className="size-6 cursor-pointer  "
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  d="M21 8.25c0-2.485-2.099-4.5-4.688-4.5-1.935 0-3.597 1.126-4.312 2.733-.715-1.607-2.377-2.733-4.313-2.733C5.1 3.75 3 5.765 3 8.25c0 7.22 9 12 9 12s9-4.78 9-12Z"
+                />
+              </svg>
+              <div className="bg-neutral-900 z-30 text-white h-5 w-5 text-center rounded-full absolute -right-2 -top-1/2 text-sm  ">
+                {wishlistCount}
+              </div>
+            </Link>
+            <Link className="relative" to={"/cart"}>
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                fill="none"
+                viewBox="0 0 24 24"
+                strokeWidth="1.5"
+                stroke="currentColor"
+                className="size-6 cursor-pointer"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  d="M15.75 10.5V6a3.75 3.75 0 1 0-7.5 0v4.5m11.356-1.993 1.263 12c.07.665-.45 1.243-1.119 1.243H4.25a1.125 1.125 0 0 1-1.12-1.243l1.264-12A1.125 1.125 0 0 1 5.513 7.5h12.974c.576 0 1.059.435 1.119 1.007ZM8.625 10.5a.375.375 0 1 1-.75 0 .375.375 0 0 1 .75 0Zm7.5 0a.375.375 0 1 1-.75 0 .375.375 0 0 1 .75 0Z"
+                />
+              </svg>
+              <div className="bg-neutral-900 z-30 text-white h-5 w-5 text-center rounded-full absolute -right-2 -top-1/2 text-sm  ">
+                {cartCount}
+              </div>
+            </Link>
           </div>
           <div className="logo  ">
             <img src={logo} alt="logo" />
@@ -99,20 +107,20 @@ function Sidebar({ setShowSlide }) {
             className={`  list-none  gap-3  items-baseline flex-col flex  my-5 `}
           >
             <li className={` text-neutral-800   font-medium`}>
-              <a href="#">HOME</a>
+              <Link to={'/'}>HOME</Link>
             </li>
             <li className={` text-neutral-800   font-medium`}>
-              <a href="#">Women’s</a>
+              <Link to={"/women"}>Women’s</Link>
             </li>
             <li className={` text-neutral-800   font-medium`}>
-              <a href="#">Men’s</a>
+              <Link to={"/men"}>Men’s</Link>
             </li>
             <li className={` text-neutral-800   font-medium`}>
-              <a href="#">Shop</a>
+              <Link to={"/shop"}>Shop</Link>
             </li>
 
             <li className={` text-neutral-800   font-medium`}>
-              <a href="#">Conatct</a>
+              <Link to={"/contact"}>Contact</Link>
             </li>
             <li
               className={` text-neutral-800  relative  font-medium dropdown `}
@@ -120,20 +128,54 @@ function Sidebar({ setShowSlide }) {
               <a href="#">Pages</a>
               <ul className="absolute flex flex-col gap-2  left-0  bg-neutral-900 bg-opacity-80 text-sm  rounded-sm  text-white">
                 <li className="border-b border-neutral-800 px-5 pt-2 pb-1 ">
-                  <a href="#">ProductCart</a>
+                  <Link to={"/cart"}>ProductCart</Link>
                 </li>
                 <li className="border-b border-neutral-800  px-5 py-1">
-                  <a href="#">ProductDetails</a>
+                  <Link to={"/brands"}>Brands</Link>
                 </li>
                 <li className=" px-5 py-1 pb-2">
-                  <a href="#">Orders</a>
+                  <Link to={"/order/allorders"}>Orders</Link>
                 </li>
               </ul>
             </li>
           </ul>
-          <div className="auth text-neutral-600   font-medium absolute bottom-4">
+          {!isLogggedin ? (
+            <>
+            <div className="auth text-neutral-600   font-medium absolute bottom-4">
+              {" "}
+              <NavLink
+                to={"login"}
+                className={({ isActive, isPending }) =>
+                  isPending ? "  " : isActive ? " font-bold " : ""
+                }
+              >
+                Login
+              </NavLink>
+              /
+              <NavLink
+                to={"signup"}
+                className={({ isActive, isPending }) =>
+                  isPending ? "" : isActive ? " font-bold " : ""
+                }
+              >
+                Signup
+              </NavLink>
+              </div>
+            </>
+          ) : (
+            <>
+              {" "}
+              <div
+                className=" p-3 cursor-pointer auth text-neutral-800 font-medium absolute bottom-4"
+                onClick={logout}
+              >
+                Logout
+              </div>
+            </>
+          )}
+          {/* <div className="auth text-neutral-600   font-medium absolute bottom-4">
             <a href="#">Login</a> / <a href="#"> Signup</a>
-          </div>
+          </div> */}
         </div>
       </div>
     </>

@@ -15,7 +15,7 @@ const navigation = [
   { name: "Women's ", href: "women" },
   { name: "Men's ", href: "men" },
   { name: "Shop", href: "shop" },
-  { name: "Conatct", href: "conatct" },
+  { name: "Contact", href: "contact" },
 ];
 
 function Navbar() {
@@ -70,22 +70,22 @@ function Navbar() {
             />
           </svg>
         </button>
-        <ul className={`  list-none  gap-9 items-baseline fl hidden lg:flex `}>
+        <ul className={`  list-none  gap-7 items-baseline fl hidden lg:flex `}>
           {navigation.map((navItem, index) => {
             return (
-              <li className={`link text-neutral-800  font-medium  `} key={index}>
+              <li className={`link text-neutral-700  font-medium uppercase `} key={index}>
                 <NavLink to={navItem.href}>{navItem.name}</NavLink>
               </li>
             );
           })}
 
           <li
-            className={`link text-neutral-800  relative  font-medium  dropdown `}
+            className={`link text-neutral-800  relative  font-medium  dropdown  `}
           >
-            <a href="#">Pages</a>
+            <a href="#" className="uppercase">Pages</a>
             <ul className="absolute flex flex-col  left-0  z-50 bg-neutral-900 bg-opacity-90 text-sm  rounded-sm text-white">
               <li className="border-b border-neutral-800 py-3 px-6  hover:bg-neutral-600 transition duration-150">
-                <a href="#">ProductCart</a>
+               <Link to={"/cart"}>ProductCart</Link>
               </li>
 
               <li className="border-b border-neutral-800 py-3 px-6  hover:bg-neutral-600 transition duration-150">
@@ -212,7 +212,7 @@ function Navbar() {
           </div>
         </div>
       </nav>
-      {showSlide && <Sidebar setShowSlide={setShowSlide} />}
+      {showSlide && <Sidebar setShowSlide={setShowSlide} wishlistCount={wishlistCount} cartCount={cartCount} isLogggedin={isLogggedin} logout={logout} />}
     </>
   );
 }

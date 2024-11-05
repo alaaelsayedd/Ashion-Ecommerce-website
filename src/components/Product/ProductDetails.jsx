@@ -1,12 +1,21 @@
 import axios from "axios";
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
+import { getUserWishListProduct } from "../../Redux/wishlistSlice";
+import { useDispatch, useSelector } from "react-redux";
+import { authContext } from "../../Context/AuthContext";
+import { getUserCartProduct } from "../../Redux/cartSlice";
+import { Bounce, toast } from "react-toastify";
 
 function ProductDetails() {
+  let dispatch = useDispatch();
   const { id } = useParams();
   const [productDetails, setProductDetails] = useState({});
   const [imgeView, setImageView] = useState(null);
   const [index, setIsFocusIndex] = useState(0);
+  const { isLogggedin } = useContext(authContext);
+  let { wishlistproduct } = useSelector((store) => store.wishlist);
+  const [wishlistIds, setWishlistIds] = useState([]);
   async function getProductDetails() {
     let { data } = await axios.get(
       `https://ecommerce.routemisr.com/api/v1/products/${id}`
@@ -14,6 +23,80 @@ function ProductDetails() {
     setProductDetails(data.data);
     setImageView(data.data.imageCover);
   }
+  async function addProductToWishlist() {
+    if (isLogggedin) {
+      // Check if product is already in the wishlist
+      if (!wishlistproduct.find((item) => item.id == id)) {
+        setWishlistIds([...wishlistIds, id]);
+        let { data } = await axios.post(
+          "https://ecommerce.routemisr.com/api/v1/wishlist",
+          {
+            productId: id,
+          },
+          {
+            headers: {
+              token: localStorage.getItem("token"),
+            },
+          }
+        );
+      } else {
+        // Remove product from wishlist
+        setWishlistIds(wishlistIds.filter((item) => item != id));
+        let { data } = await axios.delete(
+          `https://ecommerce.routemisr.com/api/v1/wishlist/${id}`,
+          {
+            headers: {
+              token: localStorage.getItem("token"),
+            },
+          }
+        );
+      }
+      dispatch(getUserWishListProduct());
+      // Refresh wishlist products
+    } else {
+      navigate("/login");
+    }
+  }
+  function setlovedProduct() {
+    return wishlistIds.find((item) => item ==id)
+      ? true
+      : false;
+  }
+  async function addProductToCart() {
+    if (isLogggedin) {
+      let { data } = await axios.post(
+        "https://ecommerce.routemisr.com/api/v1/cart",
+        {
+          productId: id,
+        },
+        {
+          headers: {
+            token: localStorage.getItem("token"),
+          },
+        }
+      );
+      dispatch(getUserCartProduct());
+
+      toast.success(data.message, {
+        position: "bottom-right",
+        autoClose: 4000,
+        hideProgressBar: true,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "light",
+        transition: Bounce,
+      });
+    } else {
+      navigate("/login");
+    }
+  }
+  useEffect(() => {
+    if (isLogggedin) {
+      dispatch(getUserWishListProduct());
+    }
+  }, []);
 
   useEffect(() => {
     getProductDetails();
@@ -81,23 +164,13 @@ function ProductDetails() {
             <i class="fa-solid fa-star px-1 text-yellow-400 text-sm"></i>
           </p>
           <div className="flex justify-between items-baseline">
-            <button className="text-white bg-red-700 hover:bg-red-800 focus:ring-4 focus:outline-none focus:ring-red-300 font-medium rounded-lg text-sm w-full sm:w-1/2   px-8 py-2.5 text-center my-5">
+            <button onClick={addProductToCart} className="text-white bg-red-700 hover:bg-red-800 focus:ring-4 focus:outline-none focus:ring-red-300 font-medium rounded-lg text-sm w-full sm:w-1/2   px-8 py-2.5 text-center my-5">
               Add To Cart
             </button>
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              fill="none"
-              viewBox="0 0 24 24"
-              stroke-width="1.5"
-              stroke="currentColor"
-              class="size-8 cursor-pointer"
-            >
-              <path
-                stroke-linecap="round"
-                stroke-linejoin="round"
-                d="M21 8.25c0-2.485-2.099-4.5-4.688-4.5-1.935 0-3.597 1.126-4.312 2.733-.715-1.607-2.377-2.733-4.313-2.733C5.1 3.75 3 5.765 3 8.25c0 7.22 9 12 9 12s9-4.78 9-12Z"
-              />
-            </svg>
+            <i  onClick={addProductToWishlist}
+             className={` fa-heart text-2xl cursor-pointer border rounded-md p-1 border-neutral-600 ${setlovedProduct()?" fa-solid    text-red-700 ":  " fa-regular text-neutral-800"}`}
+            ></i>
+           
           </div>
         </div>
       </div>

@@ -34,7 +34,7 @@ function Shop() {
       ) : (
         <div className="my-12  w-full  md:w-4/5 mx-auto p-2 ">
           <h2 className="text-2xl mb-8 font-medium uppercase relative head  ">
-            Women Fashion Products
+            ALL Products
           </h2>
           <div className="container grid-cols-2 grid   md:grid-cols-2  lg:grid-cols-5  gap-x-5 gap-y-6 items-baseline">
             {products?.map((product, index) => {

@@ -21,6 +21,7 @@ import Checkout from "./components/Checkout/Checkout";
 import Men from "./components/Pages/Men";
 import Women from "./components/Pages/Women";
 import Shop from "./components/Pages/Shop";
+import ContactForm from "./components/Contact/Conatct";
 
 function App() {
   const router = createBrowserRouter([
@@ -101,6 +102,12 @@ function App() {
           path: "/shop",
           element: (
             <Shop/>
+          ),
+        },
+        {
+          path: "/contact",
+          element: (
+            <ContactForm/>
           ),
         },
       ],
