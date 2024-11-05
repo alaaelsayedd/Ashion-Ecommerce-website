@@ -6,5 +6,6 @@ export let store = configureStore({
   reducer: {
     cart: cartReducer,
     wishlist: wishlistReducer,
+    
   },
 });

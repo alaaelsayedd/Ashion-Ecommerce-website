@@ -12,14 +12,15 @@ import {
 } from "../../Redux/wishlistSlice";
 const navigation = [
   { name: "Home", href: "/" },
-  { name: "Women’s", href: "womarn" },
-  { name: "Men’s", href: "men" },
+  { name: "Women's ", href: "women" },
+  { name: "Men's ", href: "men" },
   { name: "Shop", href: "shop" },
   { name: "Conatct", href: "conatct" },
 ];
 
 function Navbar() {
   const { isLogggedin, setLoginState } = useContext(authContext);
+
   let { cartCount } = useSelector((store) => store.cart);
   let { wishlistCount } = useSelector((store) => store.wishlist);
   let dispatch = useDispatch();
@@ -69,10 +70,10 @@ function Navbar() {
             />
           </svg>
         </button>
-        <ul className={`  list-none  gap-6 items-baseline fl hidden lg:flex `}>
+        <ul className={`  list-none  gap-9 items-baseline fl hidden lg:flex `}>
           {navigation.map((navItem, index) => {
             return (
-              <li className={`link text-neutral-800   font-medium`} key={index}>
+              <li className={`link text-neutral-800  font-medium  `} key={index}>
                 <NavLink to={navItem.href}>{navItem.name}</NavLink>
               </li>
             );
@@ -83,17 +84,16 @@ function Navbar() {
           >
             <a href="#">Pages</a>
             <ul className="absolute flex flex-col  left-0  z-50 bg-neutral-900 bg-opacity-90 text-sm  rounded-sm text-white">
-              <li className="border-b border-neutral-800 p-4  hover:bg-neutral-600 transition duration-150">
+              <li className="border-b border-neutral-800 py-3 px-6  hover:bg-neutral-600 transition duration-150">
                 <a href="#">ProductCart</a>
               </li>
-              
-              <li className="border-b border-neutral-800  p-4  hover:bg-neutral-600 transition duration-150" >
-                <a href="#">ProductDetails</a>
+
+              <li className="border-b border-neutral-800 py-3 px-6  hover:bg-neutral-600 transition duration-150">
+               <Link to={"/brands"}>Brands</Link>
               </li>
-              <li className=" p-4  hover:bg-neutral-600 transition duration-100">
+              <li className=" py-3 px-6  hover:bg-neutral-600 transition duration-100">
                 <Link to={"/order/allorders"}>Orders</Link>
               </li>
-            
             </ul>
           </li>
         </ul>

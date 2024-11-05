@@ -1,12 +1,21 @@
 import { useNavigate } from "react-router-dom";
 import "./product.css";
 import { motion, AnimatePresence } from "framer-motion";
+import { useDispatch, useSelector } from "react-redux";
+import { authContext } from "../../Context/AuthContext";
+import { getUserWishListProduct } from "../../Redux/wishlistSlice";
+import { Bounce, toast } from "react-toastify";
+import axios from "axios";
+import { useContext, useEffect, useState } from "react";
 function ProductCard({
   product,
   addProductToCart,
   addProductToWishlist,
-  wishlistIds,
 }) {
+  let dispatch = useDispatch();
+  const { isLogggedin } = useContext(authContext);
+  let { wishlistproduct } = useSelector((store) => store.wishlist);
+  const [wishlistIds, setWishlistIds] = useState([]);
   const navigate = useNavigate();
   function getProductDetails(id) {
     navigate(`/product/${id}`);
@@ -16,6 +25,86 @@ function ProductCard({
       ? true
       : false;
   }
+  async function addProductToWishlist(id) {
+    if (isLogggedin) {
+      // Check if product is already in the wishlist
+      if (!wishlistproduct.find((item) => item.id == id)) {
+        setWishlistIds([...wishlistIds, id]);
+        let { data } = await axios.post(
+          "https://ecommerce.routemisr.com/api/v1/wishlist",
+          {
+            productId: id,
+          },
+          {
+            headers: {
+              token: localStorage.getItem("token"),
+            },
+          }
+        );
+      } else {
+        // Remove product from wishlist
+        setWishlistIds(wishlistIds.filter((item) => item != id));
+        let { data } = await axios.delete(
+          `https://ecommerce.routemisr.com/api/v1/wishlist/${id}`,
+          {
+            headers: {
+              token: localStorage.getItem("token"),
+            },
+          }
+        );
+      }
+      dispatch(getUserWishListProduct());
+      // Refresh wishlist products
+    } else {
+      navigate("/login");
+    }
+  }
+
+  async function addProductToCart(id) {
+    if (isLogggedin) {
+      let { data } = await axios.post(
+        "https://ecommerce.routemisr.com/api/v1/cart",
+        {
+          productId: id,
+        },
+        {
+          headers: {
+            token: localStorage.getItem("token"),
+          },
+        }
+      );
+      dispatch(getUserCartProduct());
+
+      toast.success(data.message, {
+        position: "bottom-right",
+        autoClose: 4000,
+        hideProgressBar: true,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "light",
+        transition: Bounce,
+      });
+    } else {
+      navigate("/login");
+    }
+  }
+  useEffect(() => {
+    if (isLogggedin) {
+      dispatch(getUserWishListProduct());
+    }
+  }, []);
+  useEffect(() => {
+    if(isLogggedin)
+    {
+      setWishlistIds(wishlistproduct.map((product) => product.id));
+    }
+    else{
+      setWishlistIds([])
+    }
+  
+  }, [wishlistproduct,isLogggedin]);
 
   return (
     <>
@@ -34,7 +123,7 @@ function ProductCard({
               className="h-full w-full object-cover"
             />
             <div className="product-icons flex justify-center gap-2   transition-all duration-700">
-              <div className="h-10 w-10 rounded-full border border-neutral-700  flex justify-center items-center text-neutral-700  hover:border-red-800">
+              <div className="h-10 w-10 rounded-full border border-neutral-700  icon flex justify-center items-center text-neutral-700  hover:border-red-800">
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
                   fill="none"
@@ -52,7 +141,7 @@ function ProductCard({
                 </svg>
               </div>
               <div
-                className={`h-10 w-10 rounded-full border border-neutral-700  flex justify-center items-center ${
+                className={`h-10 w-10 rounded-full icon border border-neutral-700  flex justify-center items-center ${
                   setlovedProduct()
                     ? "bg-red-800 text-white  border-opacity-0"
                     : " text-neutral-700 hover:border-red-800 border-opacity-100"
@@ -76,7 +165,7 @@ function ProductCard({
                 </svg>
               </div>
               <div
-                className="h-10 w-10 rounded-full border border-neutral-700  flex justify-center items-center text-neutral-700 hover:border-red-800"
+                className="h-10 w-10 rounded-full icon border border-neutral-700  flex justify-center items-center text-neutral-700 hover:border-red-800"
                 onClick={() => getProductDetails(product.id)}
               >
                 <svg

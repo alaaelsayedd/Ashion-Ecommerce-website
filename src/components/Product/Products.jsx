@@ -1,12 +1,5 @@
-import { useContext, useEffect, useState } from "react";
+import {  useState } from "react";
 import ProductCard from "./ProductCard";
-import axios from "axios";
-import { authContext } from "../../Context/AuthContext";
-import { useNavigate } from "react-router-dom";
-import { Bounce, toast } from "react-toastify";
-import { useDispatch, useSelector } from "react-redux";
-import { getUserCartProduct } from "../../Redux/cartSlice";
-import { getUserWishListProduct } from "../../Redux/wishlistSlice";
 import Loading from "../Loading/Loading";
 
 function Products({
@@ -17,13 +10,7 @@ function Products({
   loadingProduct,
   isFading,
 }) {
-  let dispatch = useDispatch();
   const [selecttab, setSelectTab] = useState("all");
-  const { isLogggedin } = useContext(authContext);
-  let { wishlistproduct } = useSelector((store) => store.wishlist);
-  const [wishlistIds, setWishlistIds] = useState([]);
-
-  const navigate = useNavigate();
   function displayCtaegoryExist() {
     let categoriesExist = categories.filter(
       (category) =>
@@ -35,86 +22,6 @@ function Products({
     return categoriesExist;
   }
 
-  async function addProductToWishlist(id) {
-    if (isLogggedin) {
-      // Check if product is already in the wishlist
-      if (!wishlistproduct.find((item) => item.id == id)) {
-        setWishlistIds([...wishlistIds, id]);
-        let { data } = await axios.post(
-          "https://ecommerce.routemisr.com/api/v1/wishlist",
-          {
-            productId: id,
-          },
-          {
-            headers: {
-              token: localStorage.getItem("token"),
-            },
-          }
-        );
-      } else {
-        // Remove product from wishlist
-        setWishlistIds(wishlistIds.filter((item) => item != id));
-        let { data } = await axios.delete(
-          `https://ecommerce.routemisr.com/api/v1/wishlist/${id}`,
-          {
-            headers: {
-              token: localStorage.getItem("token"),
-            },
-          }
-        );
-      }
-      dispatch(getUserWishListProduct());
-      // Refresh wishlist products
-    } else {
-      navigate("/login");
-    }
-  }
-
-  async function addProductToCart(id) {
-    if (isLogggedin) {
-      let { data } = await axios.post(
-        "https://ecommerce.routemisr.com/api/v1/cart",
-        {
-          productId: id,
-        },
-        {
-          headers: {
-            token: localStorage.getItem("token"),
-          },
-        }
-      );
-      dispatch(getUserCartProduct());
-
-      toast.success(data.message, {
-        position: "bottom-right",
-        autoClose: 4000,
-        hideProgressBar: true,
-        closeOnClick: true,
-        pauseOnHover: true,
-        draggable: true,
-        progress: undefined,
-        theme: "light",
-        transition: Bounce,
-      });
-    } else {
-      navigate("/login");
-    }
-  }
-  useEffect(() => {
-    if (isLogggedin) {
-      dispatch(getUserWishListProduct());
-    }
-  }, []);
-  useEffect(() => {
-    if(isLogggedin)
-    {
-      setWishlistIds(wishlistproduct.map((product) => product.id));
-    }
-    else{
-      setWishlistIds([])
-    }
-  
-  }, [wishlistproduct,isLogggedin]);
   return (
     <>
       <div className="my-12  w-full  md:w-4/5 mx-auto p-2 ">
@@ -165,15 +72,7 @@ function Products({
         ) : (
           <div className="container grid-cols-2 grid   md:grid-cols-3  lg:grid-cols-4  gap-x-5 gap-y-6 items-baseline">
             {products?.map((product, index) => {
-              return (
-                <ProductCard
-                  product={product}
-                  key={index}
-                  addProductToCart={addProductToCart}
-                  addProductToWishlist={addProductToWishlist}
-                  wishlistIds={wishlistIds}
-                />
-              );
+              return <ProductCard product={product} key={index} />;
             })}
 
             {products == [] && (

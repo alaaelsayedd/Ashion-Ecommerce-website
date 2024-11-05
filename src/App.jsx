@@ -18,6 +18,9 @@ import { store } from "./Redux/store";
 import WishList from "./components/WishList/WishList";
 import Order from "./components/Order/Order";
 import Checkout from "./components/Checkout/Checkout";
+import Men from "./components/Pages/Men";
+import Women from "./components/Pages/Women";
+import Shop from "./components/Pages/Shop";
 
 function App() {
   const router = createBrowserRouter([
@@ -80,6 +83,24 @@ function App() {
             <AuthProtectRoute>
               <Checkout />
             </AuthProtectRoute>
+          ),
+        },
+        {
+          path: "/men",
+          element: (
+            <Men/>
+          ),
+        },
+        {
+          path: "/women",
+          element: (
+            <Women/>
+          ),
+        },
+        {
+          path: "/shop",
+          element: (
+            <Shop/>
           ),
         },
       ],

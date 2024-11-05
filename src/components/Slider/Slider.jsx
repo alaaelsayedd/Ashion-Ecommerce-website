@@ -35,7 +35,7 @@ function SimpleSlider() {
   };
   return (
     <div className="w-full h-80 flex items-center" style={{backgroundImage:`url(${bgImge})` ,backgroundPosition:"center",backgroundSize:"cover"}}>
-    <div className="slider-container  w-1/2    mx-auto  ">
+    <div className="slider-container  md:w-1/2 w-full    mx-auto  ">
       <Slider {...settings}>
         <div>
          <div className="content text-neutral-800 text-center flex flex-col gap-3">
