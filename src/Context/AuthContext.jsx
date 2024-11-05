@@ -5,7 +5,7 @@ function AuthContextProvider({ children }) {
   const [isLogggedin, setLoginState] = useState(
     !!localStorage.getItem("token")
   );
-  // console.log(isLogggedin)
+  
 
   useEffect(() => {
     window.addEventListener("storage", () => {

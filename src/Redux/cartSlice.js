@@ -11,7 +11,6 @@ export let getUserCartProduct = createAsyncThunk(
         },
       }
     );
-    console.log(data);
     return data;
   }
 );
