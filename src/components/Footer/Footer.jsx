@@ -69,19 +69,19 @@ function Footer() {
       <div className="col-span-2 ">
         <h4 className="uppercase text-lg font-medium my-2">NEWSLETTER</h4>
 
-        <form class="max-w-md mx-auto">
+        <form className="max-w-md mx-auto">
           
-          <div class="relative">
+          <div className="relative">
             <input
               type="email"
               id="default-search"
-              class="block w-full p-4 ps-10 text-sm  text-gray-900 border border-gray-300 rounded-full bg-gray-50 focus:ring-gray-100 focus:border-gray-300 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-red-500 dark:focus:border-red-500"
+              className="block w-full p-4 ps-10 text-sm  text-gray-900 border border-gray-300 rounded-full bg-gray-50 focus:ring-gray-100 focus:border-gray-300 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-red-500 dark:focus:border-red-500"
               placeholder="Email..."
         
             />
             <button
               type="submit"
-              class="text-white absolute end-2.5 bottom-2.5 rounded-full bg-red-700 hover:bg-red-800 focus:ring-4 focus:outline-none focus:ring-red-300 font-medium  text-sm px-4 py-2 dark:bg-red-600 dark:hover:bg-red-700 dark:focus:ring-red-800"
+              className="text-white absolute end-2.5 bottom-2.5 rounded-full bg-red-700 hover:bg-red-800 focus:ring-4 focus:outline-none focus:ring-red-300 font-medium  text-sm px-4 py-2 dark:bg-red-600 dark:hover:bg-red-700 dark:focus:ring-red-800"
             >
               Subscribe
             </button>
@@ -90,27 +90,27 @@ function Footer() {
         <ul className="flex gap-4 my-4">
           <li className="w-10 h-10 rounded-full flex justify-center items-center bg-neutral-100">
           <a href="#">
-          <i class="fa-brands fa-facebook-f "></i>
+          <i className="fa-brands fa-facebook-f "></i>
           </a>
           </li>
           <li className="w-10 h-10 rounded-full flex justify-center items-center bg-neutral-100">
           <a href="#">
-          <i class="fa-brands fa-twitter "></i>
+          <i className="fa-brands fa-twitter "></i>
           </a>
           </li>
           <li className="w-10 h-10 rounded-full flex justify-center items-center bg-neutral-100">
           <a href="#">
-          <i class="fa-brands fa-youtube"></i>
+          <i className="fa-brands fa-youtube"></i>
           </a>
           </li>
           <li className="w-10 h-10 rounded-full flex justify-center items-center bg-neutral-100">
           <a href="#">
-          <i class="fa-brands fa-instagram"></i>
+          <i className="fa-brands fa-instagram"></i>
           </a>
           </li>
           <li className="w-10 h-10 rounded-full flex justify-center items-center bg-neutral-100">
           <a href="#">
-          <i class="fa-brands fa-pinterest"></i>
+          <i className="fa-brands fa-pinterest"></i>
           </a>
           </li>
           

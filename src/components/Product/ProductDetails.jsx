@@ -1,5 +1,5 @@
 import axios from "axios";
-import { useContext, useEffect, useState } from "react";
+import { useContext, useEffect, useRef, useState } from "react";
 import { useParams } from "react-router-dom";
 import { getUserWishListProduct } from "../../Redux/wishlistSlice";
 import { useDispatch, useSelector } from "react-redux";
@@ -16,6 +16,8 @@ function ProductDetails() {
   const { isLogggedin } = useContext(authContext);
   let { wishlistproduct } = useSelector((store) => store.wishlist);
   const [wishlistIds, setWishlistIds] = useState([]);
+  
+
   async function getProductDetails() {
     let { data } = await axios.get(
       `https://ecommerce.routemisr.com/api/v1/products/${id}`
@@ -58,9 +60,7 @@ function ProductDetails() {
     }
   }
   function setlovedProduct() {
-    return wishlistIds.find((item) => item ==id)
-      ? true
-      : false;
+    return wishlistIds.find((item) => item == id) ? true : false;
   }
   async function addProductToCart() {
     if (isLogggedin) {
@@ -99,11 +99,16 @@ function ProductDetails() {
   }, []);
 
   useEffect(() => {
+   
     getProductDetails();
+    window.scrollTo(0,0)
   }, [id]);
   return (
     <>
-      <div className="conatiner flex my-20 w-3/4 mx-auto gap-5">
+      <div
+        className="conatiner flex py-20 w-3/4 mx-auto gap-5"
+      
+      >
         <div className="images w-1/2">
           <div className="imge-big h-72">
             <img
@@ -164,13 +169,20 @@ function ProductDetails() {
             <i class="fa-solid fa-star px-1 text-yellow-400 text-sm"></i>
           </p>
           <div className="flex justify-between items-baseline">
-            <button onClick={addProductToCart} className="text-white bg-red-700 hover:bg-red-800 focus:ring-4 focus:outline-none focus:ring-red-300 font-medium rounded-lg text-sm w-full sm:w-1/2   px-8 py-2.5 text-center my-5">
+            <button
+              onClick={addProductToCart}
+              className="text-white bg-red-700 hover:bg-red-800 focus:ring-4 focus:outline-none focus:ring-red-300 font-medium rounded-lg text-sm w-full sm:w-1/2   px-8 py-2.5 text-center my-5"
+            >
               Add To Cart
             </button>
-            <i  onClick={addProductToWishlist}
-             className={` fa-heart text-2xl cursor-pointer border rounded-md p-1 border-neutral-600 ${setlovedProduct()?" fa-solid    text-red-700 ":  " fa-regular text-neutral-800"}`}
+            <i
+              onClick={addProductToWishlist}
+              className={` fa-heart text-2xl cursor-pointer border rounded-md p-1 border-neutral-600 ${
+                setlovedProduct()
+                  ? " fa-solid    text-red-700 "
+                  : " fa-regular text-neutral-800"
+              }`}
             ></i>
-           
           </div>
         </div>
       </div>

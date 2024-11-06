@@ -7,6 +7,7 @@ function Signup() {
   const [errormessage, setErrorMessage] = useState("");
   const [isLoading, setLoadingStae] = useState(false);
   const navigate = useNavigate();
+  window.scrollTo(0,0)
   const validationSchema = Yup.object({
     name: Yup.string()
       .min(3, "Enter vaild name more than 3 char")
@@ -57,7 +58,7 @@ function Signup() {
   });
   return (
     <div className="container my-10 w-[75%] mx-auto p-3 border shadow-sm  ">
-      <h1 className="text-2xl text-neutral-800 ">Register Now</h1>
+      <h1 className="text-2xl text-neutral-800 head ">Register Now</h1>
       <form class="mx-auto p-6 " onSubmit={formik.handleSubmit}>
         <div class="grid md:grid-cols-2 md:gap-6 my-3">
           <div class="relative z-0 w-full mb-5 group">
@@ -65,15 +66,15 @@ function Signup() {
               type="text"
               name="name"
               id="name"
-              class="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none   focus:outline-none focus:ring-0 focus:border-red-600 peer"
+              className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none   focus:outline-none focus:ring-0 focus:border-red-600 peer"
               placeholder=" "
               onChange={formik.handleChange}
               value={formik.values.name}
               disabled={isLoading}
             />
             <label
-              for="name"
-              class="peer-focus:font-medium absolute text-sm text-gray-500  duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:start-0 rtl:peer-focus:translate-x-1/4 peer-focus:text-red-600 peer-focus:dark:text-red-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6"
+              htmlFor="name"
+              className="peer-focus:font-medium absolute text-sm text-gray-500  duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:start-0 rtl:peer-focus:translate-x-1/4 peer-focus:text-red-600 peer-focus:dark:text-red-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6"
             >
               Full name
             </label>
@@ -86,15 +87,15 @@ function Signup() {
               type="tel"
               name="phone"
               id="floating_phone"
-              class="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none   focus:outline-none focus:ring-0 focus:border-red-600 peer"
+              className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none   focus:outline-none focus:ring-0 focus:border-red-600 peer"
               placeholder=" "
               value={formik.values.phone}
               onChange={formik.handleChange}
               disabled={isLoading}
             />
             <label
-              for="floating_phone"
-              class="peer-focus:font-medium absolute text-sm text-gray-500  duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:start-0 rtl:peer-focus:translate-x-1/4 peer-focus:text-red-600 peer-focus:dark:text-red-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6"
+              htmlFor="floating_phone"
+              className="peer-focus:font-medium absolute text-sm text-gray-500  duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:start-0 rtl:peer-focus:translate-x-1/4 peer-focus:text-red-600 peer-focus:dark:text-red-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6"
             >
               Phone number (123-456-7890)
             </label>
@@ -108,15 +109,15 @@ function Signup() {
             type="email"
             name="email"
             id="floating_email"
-            class="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none   focus:outline-none focus:ring-0 focus:border-red-600 peer"
+            className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none   focus:outline-none focus:ring-0 focus:border-red-600 peer"
             placeholder=" "
             value={formik.values.email}
             onChange={formik.handleChange}
             disabled={isLoading}
           />
           <label
-            for="floating_email"
-            class="peer-focus:font-medium absolute text-sm text-gray-500  duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:start-0 rtl:peer-focus:translate-x-1/4 rtl:peer-focus:left-auto peer-focus:text-red-600 peer-focus:dark:text-red-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6"
+            htmlFor="floating_email"
+            className="peer-focus:font-medium absolute text-sm text-gray-500  duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:start-0 rtl:peer-focus:translate-x-1/4 rtl:peer-focus:left-auto peer-focus:text-red-600 peer-focus:dark:text-red-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6"
           >
             Email address
           </label>
@@ -124,12 +125,12 @@ function Signup() {
             <div className="text-xs  text-red-700">{formik.errors.email}</div>
           ) : null}
         </div>
-        <div class="relative z-0 w-full my-5 group">
+        <div className="relative z-0 w-full my-5 group">
           <input
             type="password"
             name="password"
             id="floating_password"
-            class="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none   focus:outline-none focus:ring-0 focus:border-red-600 peer"
+            className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none   focus:outline-none focus:ring-0 focus:border-red-600 peer"
             placeholder=" "
             onChange={formik.handleChange}
             value={formik.values.password}
@@ -147,7 +148,7 @@ function Signup() {
             </div>
           ) : null}
         </div>
-        <div class="relative z-0 w-full my-5 group">
+        <div className="relative z-0 w-full my-5 group">
           <input
             type="password"
             name="rePassword"
@@ -179,7 +180,7 @@ function Signup() {
         <button
           disabled={isLoading}
           type="submit"
-          class="text-white bg-red-700 hover:bg-red-800 focus:ring-4 focus:outline-none focus:ring-red-300 font-medium rounded-lg text-sm w-1/2 px-5 py-2.5 text-center mt-5  "
+          className="text-white bg-red-700 hover:bg-red-800 focus:ring-4 focus:outline-none focus:ring-red-300 font-medium rounded-lg text-sm w-1/2 px-5 py-2.5 text-center mt-5  "
         >
           {isLoading ? (
             <i className="fas fa-spinner fa-spin"></i>

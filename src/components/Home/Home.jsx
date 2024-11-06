@@ -33,18 +33,13 @@ function Home() {
     setCurrentPage(data.metadata.currentPage);
     setPageNumberPage(data.metadata.numberOfPages);
     setIsFading(false);
-    setTimeout(() => setLoadingProduct(false), 300);
+    
   }
   async function getCategories() {
     const { data } = await axios.get(
       "https://ecommerce.routemisr.com/api/v1/categories"
     );
-
     setCategoryData(data.data);
-    console.log(data.data);
-   
-
-
   }
 
   async function getCategoryProduct(id) {
@@ -68,7 +63,7 @@ function Home() {
   }
   function changePage(number) {
     setLoadingProduct(true);
-    getProduct(10, number);
+    getProduct(10, number).then(()=>setTimeout(() => setLoadingProduct(false), 300));
   }
 
   useEffect(() => {

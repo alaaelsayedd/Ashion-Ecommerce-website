@@ -23,8 +23,8 @@ import Women from "./components/Pages/Women";
 import Shop from "./components/Pages/Shop";
 import ContactForm from "./components/Contact/Conatct";
 import Brands from "./components/Brands/Brands";
-
 function App() {
+  
   const router = createBrowserRouter([
     {
       path: "",
@@ -89,44 +89,37 @@ function App() {
         },
         {
           path: "/men",
-          element: (
-            <Men/>
-          ),
+          element: <Men />,
         },
         {
           path: "/women",
-          element: (
-            <Women/>
-          ),
+          element: <Women />,
         },
         {
           path: "/shop",
-          element: (
-            <Shop/>
-          ),
+          element: <Shop />,
         },
         {
           path: "/contact",
-          element: (
-            <ContactForm/>
-          ),
+          element: <ContactForm />,
         },
         {
           path: "/brands",
-          element: (
-            <Brands/>
-          ),
+          element: <Brands />,
         },
       ],
     },
   ]);
-
+ 
   return (
     <>
+     
       <Provider store={store}>
         <AuthContextProier>
+      
           <RouterProvider router={router} />
           <ToastContainer />
+          
         </AuthContextProier>
       </Provider>
     </>

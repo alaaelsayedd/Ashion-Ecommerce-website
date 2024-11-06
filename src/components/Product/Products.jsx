@@ -1,5 +1,6 @@
-import {  useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import ProductCard from "./ProductCard";
+
 import Loading from "../Loading/Loading";
 
 function Products({
@@ -11,6 +12,7 @@ function Products({
   isFading,
 }) {
   const [selecttab, setSelectTab] = useState("all");
+  const componentRef = useRef(null);
   function displayCtaegoryExist() {
     let categoriesExist = categories.filter(
       (category) =>
@@ -21,10 +23,15 @@ function Products({
 
     return categoriesExist;
   }
+  useEffect(() => {
+    if (componentRef.current && loadingProduct) {
+      componentRef.current.scrollIntoView({ behavior: "auto", block: "start" });
+    }
+  }, [loadingProduct]);
 
   return (
     <>
-      <div className="my-12  w-full  md:w-4/5 mx-auto p-2 ">
+      <div className="my-12  w-full  md:w-4/5 mx-auto p-2 " ref={componentRef}>
         <div className=" md:flex justify-between items-baseline  ">
           <h2 className="text-2xl mb-8 font-medium uppercase relative head  ">
             New Products
