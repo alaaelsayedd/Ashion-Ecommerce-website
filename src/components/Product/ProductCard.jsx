@@ -116,7 +116,7 @@ function ProductCard({ product, addProductToCart, addProductToWishlist }) {
             <img
               src={product.imageCover}
               alt={product.title}
-              className="h-full w-full object-cover"
+              className="h-full w-full object-contain"
             />
             <div className="product-icons flex justify-center gap-2   transition-all duration-700">
               <div className="h-10 w-10 rounded-full border border-neutral-700  icon flex justify-center items-center text-neutral-700  hover:border-red-800">

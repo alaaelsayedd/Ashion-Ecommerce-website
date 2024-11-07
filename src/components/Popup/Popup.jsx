@@ -4,7 +4,7 @@ function Popup(props) {
   return props.trigger ? (
     <div className="prop-up">
       <div
-        className={`inner-prop shadow-lg border p-10 w-1/3 ${
+        className={`inner-prop shadow-lg border p-10 md:w-1/3  w-11/12 sm:w-3/4 ${
           props.closePopup ? "closepopup" : "open-pop-up"
         }`}
       >

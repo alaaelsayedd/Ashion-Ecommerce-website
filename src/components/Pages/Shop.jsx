@@ -33,10 +33,10 @@ function Shop() {
         </div>
       ) : (
         <div className="my-12  w-full  md:w-4/5 mx-auto p-2 ">
-          <h2 className="text-2xl mb-8 font-medium uppercase relative head  ">
+          <h2 className="sm:text-2xl text-lg mb-8 font-medium uppercase relative head  ">
             ALL Products
           </h2>
-          <div className="container grid-cols-2 grid   md:grid-cols-2  lg:grid-cols-5  gap-x-5 gap-y-6 items-baseline">
+          <div className="container grid-cols-2 sm:grid-cols-2 grid     lg:grid-cols-5  gap-x-5 gap-y-6 items-baseline">
             {products?.map((product, index) => {
               return <ProductCard product={product} key={index} />;
             })}
