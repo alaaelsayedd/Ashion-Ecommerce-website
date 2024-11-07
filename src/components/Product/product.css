@@ -69,6 +69,11 @@ div.product-icons div:hover{
   -webkit-animation: nav-tab 1s  ;
   animation-fill-mode: forwards;
   bottom: -1px;
+  
+}
+.nav-tab{
+  font-size: 8px;
+  font-weight: 900;
 }
 @keyframes nav-tab {
   0%{

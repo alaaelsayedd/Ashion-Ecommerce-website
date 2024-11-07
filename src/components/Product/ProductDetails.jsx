@@ -105,10 +105,10 @@ function ProductDetails() {
   return (
     <>
       <div
-        className="conatiner flex py-20 w-3/4 mx-auto gap-5"
+        className="conatiner flex flex-col lg:flex-row py-20 w-3/4 mx-auto gap-5"
       
       >
-        <div className="images w-1/2">
+        <div className="images lg:w-1/2 md:w-10/12 mx-auto  w-full">
           <div className="imge-big h-72">
             <img
               src={imgeView == "" ? productDetails.imageCover : imgeView}
@@ -116,13 +116,13 @@ function ProductDetails() {
               className="h-full w-full object-contain"
             />
           </div>
-          <div className=" grid grid-cols-5  gap-5 h-36 my-5">
+          <div className=" grid md:grid-cols-5  grid-cols-4 gap-5  h-16 md:h-36 my-5">
             {productDetails.images?.map((imge, key) => {
               return (
                 <div
                   className={
                     index == key
-                      ? "imge-small  cursor-pointer border-2 border-blue-500 hover focus:border-blue-500 rounded-md "
+                      ? "imge-small   cursor-pointer border-2 border-blue-500 hover focus:border-blue-500 rounded-md "
                       : "imge-small  cursor-pointer border-2 border-neutral-300 rounded-md hover:border-blue-500 hover focus:border-blue-500 "
                   }
                   onClick={() => {
@@ -141,7 +141,7 @@ function ProductDetails() {
             })}
           </div>
         </div>
-        <div className="content flex flex-col gap-4 w-1/2">
+        <div className="content flex flex-col gap-4 w-full lg:w-1/2">
           <h2 className="py-2 text-3xl font-medium  text-neutral-800">
             {productDetails.title}
           </h2>
@@ -167,7 +167,7 @@ function ProductDetails() {
             {productDetails?.ratingsAverage}
             <i class="fa-solid fa-star px-1 text-yellow-400 text-sm"></i>
           </p>
-          <div className="flex justify-between items-baseline">
+          <div className="flex justify-between items-center gap-4 ">
             <button
               onClick={addProductToCart}
               className="text-white bg-red-700 hover:bg-red-800 focus:ring-4 focus:outline-none focus:ring-red-300 font-medium rounded-lg text-sm w-full sm:w-1/2   px-8 py-2.5 text-center my-5"

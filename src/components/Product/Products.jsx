@@ -32,12 +32,12 @@ function Products({
   return (
     <>
       <div className="my-12  w-full  md:w-4/5 mx-auto p-2 " ref={componentRef}>
-        <div className=" md:flex justify-between items-baseline  ">
+        <div className=" lg:flex justify-between items-baseline  ">
           <h2 className="text-2xl mb-8 font-medium uppercase relative head  ">
             New Products
           </h2>
           <nav>
-            <ul className="flex gap-10  font-semibold text-sm nav-tab my-3 md:my-0">
+            <ul className="flex gap-5 md:gap-10  font-semibold sm:text-sm  nav-tab my-3 md:my-0 px-2">
               <li
                 className={`cursor-pointer ${
                   selecttab == "all" &&
