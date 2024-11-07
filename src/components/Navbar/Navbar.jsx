@@ -4,11 +4,8 @@ import "./navbar.css";
 import Sidebar from "./Sidebar";
 import { Link, NavLink } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import { getUserCartProduct, setCartCount } from "../../Redux/cartSlice";
-import {
-  getUserWishListProduct,
-  setWishlistCount,
-} from "../../Redux/wishlistSlice";
+import { getUserCartProduct } from "../../Redux/cartSlice";
+import { getUserWishListProduct } from "../../Redux/wishlistSlice";
 import { setLoginState } from "../../Redux/authSlice";
 const navigation = [
   { name: "Home", href: "/" },
@@ -33,15 +30,14 @@ function Navbar() {
     localStorage.removeItem("token");
     localStorage.removeItem("userData");
     dispatch(setLoginState(false));
+    // dispatch(setCartCount(0));
+    // dispatch(setWishlistCount(0));
   }
 
   useEffect(() => {
     if (isLogggedin) {
       dispatch(getUserCartProduct());
       dispatch(getUserWishListProduct());
-    } else {
-      dispatch(setCartCount(0));
-      dispatch(setWishlistCount(0));
     }
   }, [isLogggedin]);
 
@@ -176,7 +172,7 @@ function Navbar() {
                 />
               </svg>
               <div className="bg-neutral-900 text-white h-5 w-5 text-center rounded-full absolute -right-2 -top-1/2 text-sm  ">
-                {wishlistCount}
+                {isLogggedin ? wishlistCount : 0}
               </div>
             </Link>
 
@@ -196,7 +192,7 @@ function Navbar() {
                 />
               </svg>
               <div className="bg-neutral-900 text-white h-5 w-5 text-center rounded-full absolute -right-2 -top-1/2 text-sm ">
-                {cartCount}
+                {isLogggedin ? cartCount : 0}
               </div>
             </Link>
           </div>

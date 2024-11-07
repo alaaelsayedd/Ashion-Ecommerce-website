@@ -25,12 +25,12 @@ import Brands from "./components/Brands/Brands";
 import { useEffect } from "react";
 function App() {
 
-  useEffect(() => {
-    window.addEventListener("storage", () => {
-      localStorage.removeItem("token");
-      setLoginState(false);
-    });
-  });
+  // useEffect(() => {
+  //   window.addEventListener("storage", () => {
+  //     localStorage.removeItem("token");
+  //     setLoginState(false);
+  //   });
+  // });
   const router = createBrowserRouter([
     {
       path: "",

@@ -1,6 +1,6 @@
 import axios from "axios";
 import {  useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { getUserWishListProduct } from "../../Redux/wishlistSlice";
 import { useDispatch, useSelector } from "react-redux";
 import { getUserCartProduct } from "../../Redux/cartSlice";
@@ -15,7 +15,7 @@ function ProductDetails() {
   const { isLogggedin } = useSelector((store) => store.auth);
   let { wishlistproduct } = useSelector((store) => store.wishlist);
   const [wishlistIds, setWishlistIds] = useState([]);
-  
+  const navigate =useNavigate();
 
   async function getProductDetails() {
     let { data } = await axios.get(

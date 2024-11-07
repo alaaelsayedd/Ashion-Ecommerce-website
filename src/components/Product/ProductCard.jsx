@@ -7,13 +7,9 @@ import { Bounce, toast } from "react-toastify";
 import axios from "axios";
 import { useEffect, useState } from "react";
 import { getUserCartProduct } from "../../Redux/cartSlice";
-function ProductCard({
-  product,
-  addProductToCart,
-  addProductToWishlist,
-}) {
+function ProductCard({ product, addProductToCart, addProductToWishlist }) {
   let dispatch = useDispatch();
-  const { isLogggedin } = useSelector(store=>store.auth);
+  let { isLogggedin } = useSelector((store) => store.auth);
   let { wishlistproduct } = useSelector((store) => store.wishlist);
   const [wishlistIds, setWishlistIds] = useState([]);
   const navigate = useNavigate();
@@ -21,40 +17,43 @@ function ProductCard({
     navigate(`/product/${id}`);
   }
   function setlovedProduct() {
-    return wishlistIds.find((item) => item == product.id)
-      ? true
-      : false;
+    return wishlistIds.find((item) => item == product.id) ? true : false;
   }
   async function addProductToWishlist(id) {
     if (isLogggedin) {
-      // Check if product is already in the wishlist
-      if (!wishlistproduct.find((item) => item.id == id)) {
-        setWishlistIds([...wishlistIds, id]);
-        let { data } = await axios.post(
-          "https://ecommerce.routemisr.com/api/v1/wishlist",
-          {
-            productId: id,
-          },
-          {
-            headers: {
-              token: localStorage.getItem("token"),
-            },
-          }
-        );
+      const isInWishlist = wishlistIds.includes(id);
+
+      // Update state optimistically
+      if (!isInWishlist) {
+        setWishlistIds([...wishlistIds, id]); // Optimistically add to wishlist
       } else {
-        // Remove product from wishlist
-        setWishlistIds(wishlistIds.filter((item) => item != id));
-        let { data } = await axios.delete(
-          `https://ecommerce.routemisr.com/api/v1/wishlist/${id}`,
-          {
-            headers: {
-              token: localStorage.getItem("token"),
-            },
-          }
-        );
+        setWishlistIds(wishlistIds.filter((item) => item !== id)); // Optimistically remove from wishlist
       }
-      dispatch(getUserWishListProduct());
-      // Refresh wishlist products
+
+      try {
+        if (!isInWishlist) {
+          await axios.post(
+            "https://ecommerce.routemisr.com/api/v1/wishlist",
+            { productId: id },
+            { headers: { token: localStorage.getItem("token") } }
+          );
+        } else {
+          await axios.delete(
+            `https://ecommerce.routemisr.com/api/v1/wishlist/${id}`,
+            { headers: { token: localStorage.getItem("token") } }
+          );
+        }
+
+        // Dispatch action to refresh the wishlist in the store
+        dispatch(getUserWishListProduct());
+      } catch (error) {
+        // Revert the optimistic update if there's an error
+        if (!isInWishlist) {
+          setWishlistIds(wishlistIds.filter((item) => item !== id));
+        } else {
+          setWishlistIds([...wishlistIds, id]);
+        }
+      }
     } else {
       navigate("/login");
     }
@@ -96,15 +95,12 @@ function ProductCard({
     }
   }, []);
   useEffect(() => {
-    if(isLogggedin)
-    {
+    if (isLogggedin) {
       setWishlistIds(wishlistproduct.map((product) => product.id));
+    } else {
+      setWishlistIds([]);
     }
-    else{
-      setWishlistIds([])
-    }
-  
-  }, [wishlistproduct,isLogggedin]);
+  }, [wishlistproduct, isLogggedin]);
 
   return (
     <>
@@ -114,7 +110,7 @@ function ProductCard({
           initial={{ y: 10, opacity: 0 }}
           animate={{ y: 0, opacity: 1 }}
           exit={{ y: -10, opacity: 0 }}
-          transition={{ duration: .5 }}
+          transition={{ duration: 0.5 }}
         >
           <div className="imge cursor-pointer ">
             <img
@@ -155,7 +151,6 @@ function ProductCard({
                   strokeWidth="1.5"
                   stroke="currentColor"
                   className="size-6"
-                
                 >
                   <path
                     strokeLinecap="round"

@@ -18,13 +18,12 @@ let wishlistSlice = createSlice({
   name: "wishlist",
   initialState: {
     wishlistproduct: [],
-    wishlistCount :0
+    wishlistCount: 0,
   },
   extraReducers: (builder) => {
     builder.addCase(getUserWishListProduct.fulfilled, (state, action) => {
       state.wishlistproduct = action.payload.data;
       state.wishlistCount = action.payload.count;
-    
     });
   },
   reducers: {
@@ -34,8 +33,7 @@ let wishlistSlice = createSlice({
     setWishlistProducts: (state, action) => {
       state.wishlistproduct = action.payload;
     },
-   
   },
 });
 export let wishlistReducer = wishlistSlice.reducer;
-export let { setWishlistCount,setWishlistProducts } = wishlistSlice.actions;
+export let { setWishlistCount, setWishlistProducts } = wishlistSlice.actions;
