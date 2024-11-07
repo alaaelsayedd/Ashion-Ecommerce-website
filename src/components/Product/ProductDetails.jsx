@@ -165,7 +165,7 @@ function ProductDetails() {
           <p className="flex items-baseline">
             <span className="font-semibold text-neutral-800">Rate:</span>
             {productDetails?.ratingsAverage}
-            <i class="fa-solid fa-star px-1 text-yellow-400 text-sm"></i>
+            <i className="fa-solid fa-star px-1 text-yellow-400 text-sm"></i>
           </p>
           <div className="flex justify-between items-center gap-4 ">
             <button
