@@ -76,7 +76,7 @@ function Order() {
             </span>
           </p>
           <p className="font-medium text-lg head relative">Order Products</p>
-          <div className="grid md:grid-cols-3 lg:grid-cols-4 grid-cols-2    order-div ">
+          <div className="grid md:grid-cols-3 lg:grid-cols-4 grid-cols-1 sm:grid-cols-2 gap-4   order-div ">
             {order.cartItems.map((item,index) => (
               <div className="flex my-2 md:gap-2 items-center" key={index}>
                 <img
