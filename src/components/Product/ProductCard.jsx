@@ -2,11 +2,10 @@ import { useNavigate } from "react-router-dom";
 import "./product.css";
 import { motion, AnimatePresence } from "framer-motion";
 import { useDispatch, useSelector } from "react-redux";
-import { authContext } from "../../Context/AuthContext";
 import { getUserWishListProduct } from "../../Redux/wishlistSlice";
 import { Bounce, toast } from "react-toastify";
 import axios from "axios";
-import { useContext, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { getUserCartProduct } from "../../Redux/cartSlice";
 function ProductCard({
   product,
@@ -14,7 +13,7 @@ function ProductCard({
   addProductToWishlist,
 }) {
   let dispatch = useDispatch();
-  const { isLogggedin } = useContext(authContext);
+  const { isLogggedin } = useSelector(store=>store.auth);
   let { wishlistproduct } = useSelector((store) => store.wishlist);
   const [wishlistIds, setWishlistIds] = useState([]);
   const navigate = useNavigate();

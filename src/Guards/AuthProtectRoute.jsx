@@ -1,9 +1,10 @@
-import { useContext } from "react";
-import { authContext } from "../Context/AuthContext";
+
 import Login from "../components/Login/Login";
+import { useSelector } from "react-redux";
 
 function AuthProtectRoute({children}) {
-    const { isLogggedin } = useContext(authContext);
+    const {isLogggedin} =useSelector(store=>store.auth)
+
     return (
         <>
        {isLogggedin ? children : <Login/>}

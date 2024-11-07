@@ -6,7 +6,6 @@ import Login from "./components/Login/Login";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import Signup from "./components/Signup/Signup";
-import AuthContextProier from "./Context/AuthContext";
 import ProtectRoute from "./Guards/ProtectRoutes";
 import ProductDetails from "./components/Product/ProductDetails";
 import Cart from "./components/Cart/Cart";
@@ -23,8 +22,15 @@ import Women from "./components/Pages/Women";
 import Shop from "./components/Pages/Shop";
 import ContactForm from "./components/Contact/Conatct";
 import Brands from "./components/Brands/Brands";
+import { useEffect } from "react";
 function App() {
-  
+
+  useEffect(() => {
+    window.addEventListener("storage", () => {
+      localStorage.removeItem("token");
+      setLoginState(false);
+    });
+  });
   const router = createBrowserRouter([
     {
       path: "",
@@ -115,12 +121,12 @@ function App() {
     <>
      
       <Provider store={store}>
-        <AuthContextProier>
+        {/* <AuthContextProier> */}
       
           <RouterProvider router={router} />
           <ToastContainer />
           
-        </AuthContextProier>
+        {/* </AuthContextProier> */}
       </Provider>
     </>
   );

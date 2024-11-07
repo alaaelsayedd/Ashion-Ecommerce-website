@@ -1,9 +1,8 @@
 import axios from "axios";
-import { useContext, useEffect, useRef, useState } from "react";
+import {  useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { getUserWishListProduct } from "../../Redux/wishlistSlice";
 import { useDispatch, useSelector } from "react-redux";
-import { authContext } from "../../Context/AuthContext";
 import { getUserCartProduct } from "../../Redux/cartSlice";
 import { Bounce, toast } from "react-toastify";
 
@@ -13,7 +12,7 @@ function ProductDetails() {
   const [productDetails, setProductDetails] = useState({});
   const [imgeView, setImageView] = useState(null);
   const [index, setIsFocusIndex] = useState(0);
-  const { isLogggedin } = useContext(authContext);
+  const { isLogggedin } = useSelector((store) => store.auth);
   let { wishlistproduct } = useSelector((store) => store.wishlist);
   const [wishlistIds, setWishlistIds] = useState([]);
   

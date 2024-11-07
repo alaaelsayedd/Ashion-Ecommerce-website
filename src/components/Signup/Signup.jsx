@@ -58,7 +58,7 @@ function Signup() {
   });
   return (
     <div className="container my-10 w-[75%] mx-auto p-3 border shadow-sm  ">
-      <h1 className="text-2xl text-neutral-800 head ">Register Now</h1>
+      <h1 className="text-2xl text-neutral-800  ">Register Now</h1>
       <form class="mx-auto p-6 " onSubmit={formik.handleSubmit}>
         <div class="grid md:grid-cols-2 md:gap-6 my-3">
           <div class="relative z-0 w-full mb-5 group">
@@ -180,7 +180,7 @@ function Signup() {
         <button
           disabled={isLoading}
           type="submit"
-          className="text-white bg-red-700 hover:bg-red-800 focus:ring-4 focus:outline-none focus:ring-red-300 font-medium rounded-lg text-sm w-1/2 px-5 py-2.5 text-center mt-5  "
+          className="text-white my-2 bg-red-700 hover:bg-red-800 focus:ring-4 focus:outline-none focus:ring-red-300 font-medium rounded-lg text-sm w-1/2 px-5 py-2.5 text-center mt-5  "
         >
           {isLoading ? (
             <i className="fas fa-spinner fa-spin"></i>

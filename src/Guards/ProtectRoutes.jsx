@@ -1,10 +1,8 @@
-import { useContext } from "react";
 import { Navigate } from "react-router-dom";
-import { authContext } from "../Context/AuthContext";
+import { useSelector } from "react-redux";
 
 function ProtectRoute({ children }) {
-  const {isLogggedin} =useContext(authContext)
-  console.log(isLogggedin);
+  const { isLogggedin } = useSelector((store) => store.auth);
 
   return <>{!isLogggedin ? children : <Navigate to={"/"}></Navigate>}</>;
 }

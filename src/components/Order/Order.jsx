@@ -1,5 +1,4 @@
 import axios from "axios";
-import { div } from "framer-motion/client";
 import { jwtDecode } from "jwt-decode";
 import { useEffect, useState } from "react";
 import Loading from "../Loading/Loading";

@@ -1,15 +1,15 @@
-import { useContext, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import logo from "../../assets/logo.png";
 import "./navbar.css";
 import Sidebar from "./Sidebar";
 import { Link, NavLink } from "react-router-dom";
-import { authContext } from "../../Context/AuthContext";
 import { useDispatch, useSelector } from "react-redux";
 import { getUserCartProduct, setCartCount } from "../../Redux/cartSlice";
 import {
   getUserWishListProduct,
   setWishlistCount,
 } from "../../Redux/wishlistSlice";
+import { setLoginState } from "../../Redux/authSlice";
 const navigation = [
   { name: "Home", href: "/" },
   { name: "Women's ", href: "women" },
@@ -19,14 +19,12 @@ const navigation = [
 ];
 
 function Navbar() {
-  const { isLogggedin, setLoginState } = useContext(authContext);
-
+  const { isLogggedin } = useSelector((store) => store.auth);
   let { cartCount } = useSelector((store) => store.cart);
   let { wishlistCount } = useSelector((store) => store.wishlist);
   let dispatch = useDispatch();
   const [showSlide, setShowSlide] = useState(false);
   const userDate = JSON.parse(localStorage.getItem("userData"));
-
 
   function openSidebar() {
     setShowSlide(true);
@@ -34,7 +32,7 @@ function Navbar() {
   function logout() {
     localStorage.removeItem("token");
     localStorage.removeItem("userData");
-    setLoginState(false);
+    dispatch(setLoginState(false));
   }
 
   useEffect(() => {
@@ -74,7 +72,10 @@ function Navbar() {
         <ul className={`  list-none  gap-7 items-baseline fl hidden lg:flex `}>
           {navigation.map((navItem, index) => {
             return (
-              <li className={`link text-neutral-700  font-medium  text-base uppercase `} key={index}>
+              <li
+                className={`link text-neutral-700  font-medium  text-base uppercase `}
+                key={index}
+              >
                 <NavLink to={navItem.href}>{navItem.name}</NavLink>
               </li>
             );
@@ -83,14 +84,16 @@ function Navbar() {
           <li
             className={`link text-neutral-800  relative  font-medium  dropdown  `}
           >
-            <a href="#" className="uppercase">Pages</a>
+            <a href="#" className="uppercase">
+              Pages
+            </a>
             <ul className="absolute flex flex-col  left-0  z-50 bg-neutral-900 bg-opacity-90 text-sm  rounded-sm text-white">
               <li className="border-b border-neutral-800 py-3 px-6  hover:bg-neutral-600 transition duration-150">
-               <Link to={"/cart"}>ProductCart</Link>
+                <Link to={"/cart"}>ProductCart</Link>
               </li>
 
               <li className="border-b border-neutral-800 py-3 px-6  hover:bg-neutral-600 transition duration-150">
-               <Link to={"/brands"}>Brands</Link>
+                <Link to={"/brands"}>Brands</Link>
               </li>
               <li className=" py-3 px-6  hover:bg-neutral-600 transition duration-100">
                 <Link to={"/order/allorders"}>Orders</Link>
@@ -157,7 +160,6 @@ function Navbar() {
             )}
           </div>
           <div className="icons flex gap-5 mx-2">
-      
             <Link to={"/wishlist"} className="relative">
               <svg
                 xmlns="http://www.w3.org/2000/svg"
@@ -200,7 +202,15 @@ function Navbar() {
           </div>
         </div>
       </nav>
-      {showSlide && <Sidebar setShowSlide={setShowSlide} wishlistCount={wishlistCount} cartCount={cartCount} isLogggedin={isLogggedin} logout={logout} />}
+      {showSlide && (
+        <Sidebar
+          setShowSlide={setShowSlide}
+          wishlistCount={wishlistCount}
+          cartCount={cartCount}
+          isLogggedin={isLogggedin}
+          logout={logout}
+        />
+      )}
     </>
   );
 }
