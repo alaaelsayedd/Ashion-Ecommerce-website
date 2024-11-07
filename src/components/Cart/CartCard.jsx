@@ -12,12 +12,12 @@ function CartCard({ product, ConfirmdeletItemformCart, updateCartQuantity }) {
     }
   });
   return (
-    <div className="flex gap-x-5">
-      <div className="  w-1/3  ">
+    <div className="flex gap-x-5 py-5">
+      <div className="  w-1/3   ">
         <img
           src={product.product.imageCover}
           alt={product.product.title}
-          className=" w-full h-full object-contain "
+          className=" w-full h-40 object-contain "
         />
       </div>
       <div className="content w-2/3 text-neutral-800  flex flex-col md:gap-2 gap-y-1 text-sm sm:text-base">

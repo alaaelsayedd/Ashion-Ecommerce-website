@@ -141,7 +141,7 @@ function Cart() {
                 CheckOut
               </Link>
             </div>
-            <div className="cards-item grid lg:grid-cols-3 grid-cols-1 sm:grid-cols-2  px-1 md:px-10 justify-between items-baseline md:gap-10  gap-y-12  sm:gap-y-10 gap-x-4 my-10">
+            <div className="cards-item grid lg:grid-cols-3 grid-cols-1 sm:grid-cols-2   px-1 md:px-10 justify-between items-baseline md:gap-10  gap-y-12  sm:gap-y-10 gap-x-4 border overflow-hidden my-8">
               {cartProducts.map((product, index) => (
                 <CartCard
                   product={product}
@@ -184,7 +184,7 @@ function Cart() {
               </Popup>
             </div>
             <button
-              className="text-white bg-red-700 hover:bg-red-800  font-medium rounded-lg text-sm  py-2 w-1/5 block  mx-auto  text-center "
+              className="text-white bg-red-700 hover:bg-red-800  font-medium rounded-lg text-sm    py-2 md:w-1/5 w-3/4 sm:w-1/2 block  mx-auto  text-center "
               onClick={() => {
                 setProductDetails({ title: " All Items " });
                 setPopUp(true);

@@ -2,7 +2,9 @@ import { useEffect, useRef } from "react";
 import logo from "../../assets/logo.png";
 import "./navbar.css";
 import { Link, NavLink } from "react-router-dom";
-function Sidebar({ setShowSlide, wishlistCount, cartCount, isLogggedin,logout }) {
+import { useSelector } from "react-redux";
+function Sidebar({ setShowSlide, wishlistCount, cartCount, logout }) {
+  let { isLogggedin } = useSelector((store) => store.auth);
   const containerDiv = useRef(null);
   function closeSidebar() {
     let divWidth = containerDiv.current.offsetWidth;
@@ -107,7 +109,7 @@ function Sidebar({ setShowSlide, wishlistCount, cartCount, isLogggedin,logout })
             className={`  list-none  gap-3  items-baseline flex-col flex  my-5 `}
           >
             <li className={` text-neutral-800   font-medium`}>
-              <Link to={'/'}>HOME</Link>
+              <Link to={"/"}>HOME</Link>
             </li>
             <li className={` text-neutral-800   font-medium`}>
               <Link to={"/women"}>Women’s</Link>
@@ -141,25 +143,25 @@ function Sidebar({ setShowSlide, wishlistCount, cartCount, isLogggedin,logout })
           </ul>
           {!isLogggedin ? (
             <>
-            <div className="auth text-neutral-600   font-medium absolute bottom-4">
-              {" "}
-              <NavLink
-                to={"login"}
-                className={({ isActive, isPending }) =>
-                  isPending ? "  " : isActive ? " font-bold " : ""
-                }
-              >
-                Login
-              </NavLink>
-              /
-              <NavLink
-                to={"signup"}
-                className={({ isActive, isPending }) =>
-                  isPending ? "" : isActive ? " font-bold " : ""
-                }
-              >
-                Signup
-              </NavLink>
+              <div className="auth text-neutral-600   font-medium absolute bottom-4">
+                {" "}
+                <NavLink
+                  to={"login"}
+                  className={({ isActive, isPending }) =>
+                    isPending ? "  " : isActive ? " font-bold " : ""
+                  }
+                >
+                  Login
+                </NavLink>
+                /
+                <NavLink
+                  to={"signup"}
+                  className={({ isActive, isPending }) =>
+                    isPending ? "" : isActive ? " font-bold " : ""
+                  }
+                >
+                  Signup
+                </NavLink>
               </div>
             </>
           ) : (
@@ -173,9 +175,6 @@ function Sidebar({ setShowSlide, wishlistCount, cartCount, isLogggedin,logout })
               </div>
             </>
           )}
-          {/* <div className="auth text-neutral-600   font-medium absolute bottom-4">
-            <a href="#">Login</a> / <a href="#"> Signup</a>
-          </div> */}
         </div>
       </div>
     </>
