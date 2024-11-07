@@ -109,7 +109,7 @@ function WishList() {
         </h1>
 
         {wishlistproduct.length > 0 ? (
-          <div className="wishlist-cont cards-item grid lg:grid-cols-3 grid-cols-2  px-1 md:px-10 justify-between items-baseline md:gap-10  gap-y-12  sm:gap-y-10 gap-x-4 my-10">
+          <div className="wishlist-cont cards-item grid lg:grid-cols-3 grid-cols-1 sm:grid-cols-2  px-1 md:px-10 justify-between items-baseline md:gap-10  gap-y-12  sm:gap-y-10 gap-x-4 my-10">
             {wishlistproduct.map((product, index) => (
               <WishlistCard
                 product={product}

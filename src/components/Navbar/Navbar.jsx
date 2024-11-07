@@ -30,8 +30,6 @@ function Navbar() {
     localStorage.removeItem("token");
     localStorage.removeItem("userData");
     dispatch(setLoginState(false));
-    // dispatch(setCartCount(0));
-    // dispatch(setWishlistCount(0));
   }
 
   useEffect(() => {
