@@ -1,33 +1,32 @@
-import Music from "../../assets/music1.jpg"
-import woman from "../../assets/womanFashion.jpg"
-import men from "../../assets/men.jpg"
-import baby from "../../assets/category-3.jpg"
-import supermaret from "../../assets/slider-image-3.jpeg"
-
+import Music from "../../assets/music1.jpg";
+import woman from "../../assets/woman2.jpg";
+import men from "../../assets/men.jpg";
+import baby from "../../assets/category-3.jpg";
+import supermaret from "../../assets/slider-image-3.jpeg";
 
 let categories = [
   {
-    name:"SuperMarket",
-    image:supermaret
+    name: "SuperMarket",
+    image: supermaret,
   },
   {
-  name:"Women's Fashion",
-  image:woman
-},{
-  name:"Men's Fashion",
-  image:men
-},
-{
-  name:"Baby & Toys",
-  image:baby
-},
+    name: "Women's Fashion",
+    image: woman,
+  },
+  {
+    name: "Men's Fashion",
+    image: men,
+  },
+  {
+    name: "Baby & Toys",
+    image: baby,
+  },
 
-
-{
-  name:"Music",
-  image:Music
-},
-]
+  {
+    name: "Music",
+    image: Music,
+  },
+];
 function Header() {
   return (
     <>
